@@ -65,7 +65,7 @@
   function preload() {
     try {
       if (!ctx || loading) return; loading = true;
-      ['one', 'two', 'three', 'packers'].forEach(function (k) { // team chant clips (tools/make_voice.py)
+      [].forEach(function (k) { // voice off (Levi 11/25: Mac voices sound robotic); list real recordings here
         fetch('/audio/' + k + '.mp3?v=4').then(function (r) { return r.arrayBuffer(); }).then(function (ab) {
           return new Promise(function (ok, no) { var p = ctx.decodeAudioData(ab, ok, no); if (p && p.then) p.then(ok, no); });
         }).then(function (b) { bufs[k] = b; }).catch(function () { loading = false; });
