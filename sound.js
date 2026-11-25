@@ -66,7 +66,7 @@
     try {
       if (!ctx || loading) return; loading = true;
       ['one', 'two', 'three', 'packers', 'bringitin'].forEach(function (k) {
-        fetch('/audio/' + k + '.mp3').then(function (r) { return r.arrayBuffer(); }).then(function (ab) {
+        fetch('/audio/' + k + '.mp3?v=3').then(function (r) { return r.arrayBuffer(); }).then(function (ab) {
           return new Promise(function (ok, no) { var p = ctx.decodeAudioData(ab, ok, no); if (p && p.then) p.then(ok, no); });
         }).then(function (b) { bufs[k] = b; }).catch(function () {});
       });
@@ -243,7 +243,7 @@
     n.connect(bp); bp.connect(g);
   });
 
-  function packers() { try { clip('packers'); airhorn(); crowd(); } catch (e) {} }
+  function packers() { try { var said = clip('packers'); setTimeout(crowd, said ? 420 : 0); setTimeout(airhorn, said ? 640 : 0); } catch (e) {} }
 
   function setMuted(m) {
     muted = !!m;

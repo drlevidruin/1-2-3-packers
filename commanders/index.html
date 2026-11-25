@@ -53,7 +53,7 @@
   .title h1 b{font-weight:400;color:var(--gold)}
 
   .teamband{flex:none;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;padding:0 12px;
-    background:var(--c1);color:var(--c2);border:3px solid var(--c2);box-shadow:0 4px 0 rgba(0,0,0,.35);transition:background .2s,color .2s,border-color .2s}
+    background:var(--c1);color:var(--ink,var(--c2));border:3px solid var(--c2);box-shadow:0 4px 0 rgba(0,0,0,.35);transition:background .2s,color .2s,border-color .2s}
   .teamband span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:21px;letter-spacing:.8px}
 
   .stage{flex:1;min-height:200px;position:relative;margin:6px 0 4px}
@@ -67,7 +67,7 @@
     box-shadow:0 calc(var(--u)*1.1) 0 rgba(0,0,0,.35), inset 0 calc(var(--u)*-1.4) 0 rgba(0,0,0,.18);
     display:grid;place-items:center;overflow:hidden;transition:background .15s,border-color .15s}
   .helmet::before{content:"";position:absolute;top:-10%;bottom:-10%;left:50%;width:22%;transform:translateX(-50%);background:var(--pc2);opacity:.5}
-  .helmet .n{position:relative;font-family:Anton,Impact,sans-serif;font-size:calc(var(--u)*6);line-height:1;color:var(--pc2);
+  .helmet .n{position:relative;font-family:Anton,Impact,sans-serif;font-size:calc(var(--u)*6);line-height:1;color:var(--pn,var(--pc2));
     text-shadow:0 0 calc(var(--u)*.8) var(--pc1),0 0 calc(var(--u)*.8) var(--pc1),0 0 calc(var(--u)*.8) var(--pc1)}
   .pl.star{z-index:4}
   .pl.star .helmet{box-shadow:0 0 0 calc(var(--u)*.7) var(--gold),0 calc(var(--u)*1.1) 0 rgba(0,0,0,.35)}
@@ -130,22 +130,16 @@
   .payoff p small{font-weight:600;font-size:12.5px;opacity:.85;display:block}
   .payoff.hot{border-left-color:var(--red)}
 
-  .strip{flex:none;height:50px;display:flex;gap:7px;overflow-x:auto;scroll-snap-type:x proximity;padding:3px 2px 6px;margin:0 -10px;padding-left:10px;padding-right:10px;
-    scrollbar-width:none;-webkit-overflow-scrolling:touch}
-  .strip::-webkit-scrollbar{display:none}
-  .pickrow{flex:none;display:flex;align-items:center;justify-content:space-between;height:22px;margin:0 2px 2px;font-weight:800;font-size:14px;letter-spacing:.6px;text-transform:uppercase}
-  .pickrow .sw{display:flex;align-items:center;gap:6px;color:#fff;text-shadow:0 1px 0 rgba(0,0,0,.45);white-space:nowrap}
-  .pickrow .sw i{font-style:normal;display:inline-block;animation:swipe 1.3s ease-in-out infinite}
-  @keyframes swipe{0%,100%{transform:translateX(0)}50%{transform:translateX(9px)}}
-  .pickrow button{flex:none;border:0;background:rgba(0,0,0,.4);color:var(--gold);font-weight:800;font-size:13.5px;letter-spacing:.5px;text-transform:uppercase;border-radius:999px;padding:0 11px;height:22px;cursor:pointer}
-  .stripwrap{flex:none;position:relative}
-  .stripwrap::after{content:"\203A";position:absolute;right:-10px;top:0;bottom:6px;width:48px;display:flex;align-items:center;justify-content:flex-end;padding-right:7px;
-    font:400 32px Anton,Impact,sans-serif;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.4);background:linear-gradient(90deg,rgba(14,56,30,0),rgba(14,56,30,.96) 65%);pointer-events:none;transition:opacity .2s}
-  .stripwrap.end::after{opacity:0}
-  .chip{flex:none;scroll-snap-align:center;height:40px;min-width:86px;padding:0 12px;border-radius:10px;border:2.5px solid var(--b);background:var(--a);color:var(--b);
-    font-weight:800;font-size:15px;letter-spacing:.3px;text-transform:uppercase;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.4)}
-  .chip.sel{outline:3px solid #fff;outline-offset:1px;transform:translateY(-1px)}
-  .chip.other{--a:#fff;--b:#203731}
+  .pickbtn{flex:none;height:52px;margin:0 0 8px;display:flex;align-items:center;gap:10px;padding:0 10px 0 14px;border:0;border-radius:14px;width:100%;
+    background:#fff;color:var(--green);box-shadow:0 4px 0 rgba(0,0,0,.35);cursor:pointer;font-weight:800;text-transform:uppercase;text-align:left}
+  .pickbtn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.35)}
+  .pickbtn .lbl{flex:none;font-size:17px;letter-spacing:.4px;line-height:1}
+  .pickbtn .cur{flex:1;min-width:0;height:36px;border-radius:9px;background:var(--c1);color:var(--ink,var(--c2));border:2.5px solid var(--c2);display:flex;align-items:center;justify-content:center;
+    font-size:17px;letter-spacing:.4px;padding:0 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pickbtn .car{flex:none;font-size:22px;line-height:1;color:var(--green)}
+  .pickbtn.wiggle{animation:wig 1.1s ease-in-out 2}
+  @keyframes wig{0%,100%{transform:none}20%{transform:rotate(-1.6deg)}40%{transform:rotate(1.6deg)}60%{transform:rotate(-1deg)}80%{transform:rotate(.6deg)}}
+  .teamband{cursor:pointer}
 
   .actions{flex:none;display:flex;gap:8px;padding:2px 0 max(12px,env(safe-area-inset-bottom))}
   .btn{flex:1;height:62px;border:0;border-radius:16px;cursor:pointer;font-family:Anton,Impact,sans-serif;font-size:clamp(21px,6vw,27px);letter-spacing:.8px;
@@ -181,17 +175,29 @@
   .fine{font-family:system-ui,sans-serif;font-size:11.5px;line-height:1.5;opacity:.72;margin:14px 0 0}
   .fine a{color:#fff}
 
-  /* sheet */
-  .sheet{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;justify-content:center}
-  .sheet .box{width:min(560px,100%);background:#123d22;border-top:4px solid var(--gold);border-radius:18px 18px 0 0;padding:18px 16px max(18px,env(safe-area-inset-bottom))}
-  .sheet h3{margin:0 0 10px;font-size:24px}
-  .sheet .other{margin:0}
+  /* full-screen team picker */
+  .picker{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;background:#0e3a1f;
+    background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 60px,transparent 60px 120px);animation:pkup .22s ease-out}
+  @keyframes pkup{from{transform:translateY(40px);opacity:0}}
+  .pk-head{flex:none;display:flex;align-items:center;gap:10px;padding:calc(env(safe-area-inset-top) + 10px) 14px 8px;max-width:560px;width:100%;margin:0 auto}
+  .pk-head h3{flex:1;margin:0;font-size:30px;line-height:1;color:var(--gold);text-shadow:0 3px 0 rgba(0,0,0,.35)}
+  .pk-x{flex:none;width:44px;height:44px;border-radius:12px;border:0;background:#fff;color:var(--green);font-size:22px;font-weight:900;cursor:pointer}
+  .pk-body{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:4px 12px max(24px,env(safe-area-inset-bottom))}
+  .pk-body > *{max-width:560px;margin-left:auto;margin-right:auto}
+  .pk-body .other{margin:0 auto 12px}
+  .pk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .pk-grid .t{min-height:58px;font-size:16px;padding:7px 4px}
+  .pk-grid .t small{font-size:12px}
+  .pk-grid .t.sel{outline:3px solid #fff;outline-offset:2px}
+  .pk-note{text-align:center;font-weight:700;font-size:14px;opacity:.8;margin:14px auto 0}
+  html.lock,html.lock body{overflow:hidden}
+  @media (max-width:340px){ .pk-grid .t{font-size:14px} .pk-grid .t small{font-size:11px} .pickbtn .lbl{font-size:15px} }
   .toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 50px);transform:translateX(-50%);background:#000;color:#fff;font-weight:800;font-size:16px;
     padding:9px 16px;border-radius:999px;opacity:0;transition:opacity .2s;z-index:70;pointer-events:none;max-width:90vw;text-align:center}
   .toast.on{opacity:.92}
 
   @media (prefers-reduced-motion: reduce){
-    .field.shake,.coach.m-yell .head,.btn.pulse,.hint{animation:none}
+    .pickbtn.wiggle,.picker,.field.shake,.coach.m-yell .head,.btn.pulse,.hint{animation:none}
   }
   @media (min-width:700px){ .app{padding-top:10px} .teams{grid-template-columns:repeat(4,1fr)} }
 </style>
@@ -218,8 +224,7 @@
 
   <div class="payoff" id="payoff"><p id="payoffText">Pick your team below, then tap the big button. Coach Mike will handle the rest.</p></div>
 
-  <div class="pickrow"><span class="sw">Swipe to find your team <i>👉</i></span><button id="allTeams">All 32 ↓</button></div>
-  <div class="stripwrap" id="stripwrap"><div class="strip" id="strip"></div></div>
+  <button class="pickbtn" id="pickBtn" aria-label="Pick your team"><span class="lbl">Pick your team</span><span class="cur disp" id="curTeam">STEELERS</span><span class="car">▾</span></button>
 
   <div class="actions">
     <button class="btn" id="go">Get ready to huddle</button>
@@ -242,20 +247,22 @@
   </footer>
 </section>
 
-<div class="sheet" id="sheet" hidden>
-  <div class="box">
-    <h3 class="disp">ANY TEAM. WE ARE NOT THE COPS.</h3>
+<div class="picker" id="picker" hidden role="dialog" aria-label="Pick your team">
+  <div class="pk-head"><h3 class="disp">PICK YOUR TEAM</h3><button class="pk-x" id="pkClose" aria-label="Close">✕</button></div>
+  <div class="pk-body">
     <div class="other">
-      <input id="custom2" maxlength="32" placeholder="Lakers? Your kid's soccer team?" enterkeyhint="go" autocomplete="off">
-      <button id="customGo2">Huddle</button>
+      <input id="custom2" maxlength="32" placeholder="Or type ANY team…" enterkeyhint="go" autocomplete="off">
+      <button id="customGo2">Go</button>
     </div>
+    <div class="pk-grid" id="pkGrid"></div>
+    <p class="pk-note">Lakers? Your kid's soccer team? Type it. The coach will still say the same thing.</p>
   </div>
 </div>
 <div class="toast" id="toast"></div>
 <canvas id="fx"></canvas>
 
-<script src="/sound.js"></script>
-<script src="/share.js"></script>
+<script src="/sound.js?v=3"></script>
+<script src="/share.js?v=3"></script>
 <script>
 (function(){
 'use strict';
@@ -496,6 +503,7 @@ function dress(t, green){
     p.classList.toggle("star", k >= 0);
     p.style.setProperty("--pc1", green ? "#203731" : t.c1);
     p.style.setProperty("--pc2", green ? "#FFB612" : t.c2);
+    p.style.setProperty("--pn", green ? "#FFB612" : (t.ink || t.c2));
     const tag = p.querySelector(".tag");
     if (k >= 0){ tag.hidden = false; tag.textContent = String(t.stars[k][0]).slice(0,14); }
     else tag.hidden = true;
@@ -508,46 +516,44 @@ function dress(t, green){
 }
 
 // ---------- teams ----------
-const ALL = TEAMS.map(([city,name,c1,c2,stars]) => ({label:`${city} ${name}`, short:name, city, c1, c2, stars, slug:slug(name)}));
+function lum(h){ const n = parseInt(h.slice(1),16); return [n>>16, (n>>8)&255, n&255].map(v=>{ v/=255; return v<=.03928 ? v/12.92 : Math.pow((v+.055)/1.055, 2.4); }).reduce((a,v,i)=>a+v*[.2126,.7152,.0722][i],0); }
+function ink(c1, c2){ // readable text color on c1: c2 if it contrasts, else white or black
+  if (!/^#[0-9a-f]{6}$/i.test(c1) || !/^#[0-9a-f]{6}$/i.test(c2)) return c2;
+  const a = lum(c1), b = lum(c2), cr = (Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+  return cr >= 3 ? c2 : (a > .35 ? "#111111" : "#ffffff");
+}
+const ALL = TEAMS.map(([city,name,c1,c2,stars]) => ({label:`${city} ${name}`, short:name, city, c1, c2, ink:ink(c1,c2), stars, slug:slug(name)}));
 const BY = Object.fromEntries(ALL.map(t=>[t.slug,t]));
+let gen = 0;
 let team = null, state = "idle", runs = 0, sleepStreak = 0, forceSleep = false, lastSleepy = false, lastPayoff = "", busy = false;
 let count = +(localStorage.getItem("p123") || 0);
 $("#count").textContent = count;
 
-const strip = $("#strip");
-ALL.forEach(t=>{
-  const c = document.createElement("button"); c.className = "chip"; c.textContent = t.short; c.dataset.slug = t.slug;
-  c.style.setProperty("--a", t.c1); c.style.setProperty("--b", t.c2);
-  c.onclick = () => { if (busy) return; sfx("ding"); pick(t); };
-  strip.appendChild(c);
-});
-const oc = document.createElement("button"); oc.className = "chip other"; oc.textContent = "Other…";
-oc.onclick = () => { if (busy) return; $("#sheet").hidden = false; setTimeout(()=>$("#custom2").focus(), 50); };
-strip.appendChild(oc);
-
-// swipe cue: arrow fades at the end, one gentle nudge so people see the row moves
-const swrap = $("#stripwrap");
-let stripTouched = false;
-const markTouched = () => { stripTouched = true; };
-strip.addEventListener("pointerdown", markTouched, {passive:true});
-strip.addEventListener("touchstart", markTouched, {passive:true});
-strip.addEventListener("scroll", () => swrap.classList.toggle("end", strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 4), {passive:true});
-setTimeout(() => {
-  if (stripTouched || reduce) return;
-  const x = strip.scrollLeft;
-  strip.scrollTo({left: x + 140, behavior: "smooth"});
-  setTimeout(() => { if (!stripTouched) strip.scrollTo({left: x, behavior: "smooth"}); }, 750);
-}, 1600);
-$("#allTeams").onclick = () => document.querySelector(".more").scrollIntoView({behavior: reduce ? "auto" : "smooth"});
+const picker = $("#picker"), pkGrid = $("#pkGrid");
+function tile(t, onTap){
+  const b = document.createElement("button"); b.className = "t"; b.dataset.slug = t.slug;
+  b.style.setProperty("--a", t.c1); b.style.setProperty("--b", t.c2); b.style.color = t.ink;
+  const sm = document.createElement("small"); sm.textContent = t.city; b.appendChild(sm); b.appendChild(document.createTextNode(t.short));
+  b.onclick = onTap; return b;
+}
+ALL.forEach(t => pkGrid.appendChild(tile(t, () => { sfx("ding"); closePicker(); pick(t); })));
+function openPicker(){
+  if (busy) { toast("One sec. Huddle in progress."); return; }
+  picker.hidden = false; document.documentElement.classList.add("lock");
+  const sel = pkGrid.querySelector(".t.sel");
+  pkGrid.parentNode.scrollTop = 0;
+  if (sel) { try { sel.scrollIntoView({block:"center"}); } catch(e){} }
+  sfx("whoosh");
+}
+function closePicker(){ picker.hidden = true; document.documentElement.classList.remove("lock"); }
+$("#pickBtn").onclick = openPicker;
+$("#band").onclick = openPicker;
+$("#pkClose").onclick = closePicker;
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !picker.hidden) closePicker(); });
+if (!window.PRESET_TEAM && !location.search) setTimeout(() => { if (state === "idle" && picker.hidden) $("#pickBtn").classList.add("wiggle"); }, 1800);
 
 const grid = $("#teams");
-ALL.forEach(t=>{
-  const b = document.createElement("button"); b.className = "t";
-  b.style.setProperty("--a", t.c1); b.style.setProperty("--b", t.c2);
-  const sm = document.createElement("small"); sm.textContent = t.city; b.appendChild(sm); b.appendChild(document.createTextNode(t.short));
-  b.onclick = () => { if (busy) return; pick(t); window.scrollTo({top:0, behavior: reduce ? "auto" : "smooth"}); };
-  grid.appendChild(b);
-});
+ALL.forEach(t => grid.appendChild(tile(t, () => { if (busy) { toast("One sec. Huddle in progress."); return; } pick(t); window.scrollTo({top:0, behavior: reduce ? "auto" : "smooth"}); })));
 
 function teamPep(t){ if (t.custom) return `${t.short}? Love it. Great name. Huddle up.`; return TEAMPEP[t.slug] || `${t.city}! Great city. I think I've been here. Huddle up.`; }
 function teamPayoff(t){
@@ -560,10 +566,11 @@ function pick(t, opts){
   team = t;
   document.documentElement.style.setProperty("--c1", t.c1);
   document.documentElement.style.setProperty("--c2", t.c2);
+  document.documentElement.style.setProperty("--ink", t.ink || t.c2);
   $("#bandText").textContent = `THE ${t.short.toUpperCase()} HUDDLE`;
-  document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("sel", c.dataset.slug === t.slug));
-  const sel = strip.querySelector(".chip.sel");
-  if (sel) { try { sel.scrollIntoView({inline:"center", block:"nearest", behavior: opts.instant || reduce ? "auto" : "smooth"}); } catch(e){} }
+  gen++; stopSleep();
+  $("#curTeam").textContent = t.short.toUpperCase();
+  document.querySelectorAll(".t").forEach(c=>c.classList.toggle("sel", !t.custom && c.dataset.slug === t.slug));
   field.classList.remove("broke");
   dress(t, false);
   if (opts.offscreen) offscreen(); else formation(1);
@@ -589,7 +596,7 @@ const EGGS = { cheese:"The coach just got a very long email from Wisconsin.", ro
 function submitCustom(input){
   const raw = input.value.trim(); if (!raw) return;
   const low = raw.toLowerCase();
-  input.value = ""; input.blur(); $("#sheet").hidden = true;
+  input.value = ""; input.blur(); closePicker();
   if (low === "zzz" || low === "snore" || low === "sleep") { forceSleep = true; pick(team || BY.steelers); toast("Coach is getting drowsy…"); return; }
   if (EGGS[low]) { pick(customTeam(raw)); toast(EGGS[low]); return; }
   if (low === "packers" || low === "green bay") { pick(BY.packers); toast("You typed Packers. The coach already knew."); return; }
@@ -600,7 +607,7 @@ $("#customGo").onclick = () => submitCustom($("#custom"));
 $("#customGo2").onclick = () => submitCustom($("#custom2"));
 $("#custom").addEventListener("keydown", e=>{ if (e.key === "Enter") submitCustom($("#custom")); });
 $("#custom2").addEventListener("keydown", e=>{ if (e.key === "Enter") submitCustom($("#custom2")); });
-$("#sheet").addEventListener("click", e=>{ if (e.target.id === "sheet") $("#sheet").hidden = true; });
+
 
 // ---------- chyron ----------
 let chyI = 0, chyHold = 0;
@@ -670,6 +677,12 @@ async function autoPoke(){
   await wait(500); p.style.left = ox; p.style.top = oy; await wait(400); p.classList.remove("poke");
   if (state === "asleep") wake();
 }
+function stopSleep(){
+  clearTimeout(sleepTimer);
+  try { snoreStop && snoreStop(); } catch(e){}
+  snoreStop = null;
+  const r = wakeResolve; wakeResolve = null; if (r) r();
+}
 function wake(){
   if (state !== "asleep") return;
   clearTimeout(sleepTimer);
@@ -699,6 +712,7 @@ coach.addEventListener("click", ()=>{
 // ---------- the huddle ----------
 async function huddleUp(){
   if (!team || busy) return;
+  const g = gen;
   busy = true; setState("forming");
   field.classList.remove("broke"); call.className = "call";
   dress(team, false); setMood("pep");
@@ -709,10 +723,11 @@ async function huddleUp(){
   const line = (Math.random() < .4 || runs === 0) ? teamPep(team) : nextPep();
   await say(line);
   await wait(650);
+  if (g !== gen) return;
   const sleepy = Math.random() < sleepChance();
   forceSleep = false;
   lastSleepy = sleepy;
-  if (sleepy){ sleepStreak++; busy = false; await sleepSeq(); busy = true; }
+  if (sleepy){ sleepStreak++; busy = false; await sleepSeq(); if (g !== gen) return; busy = true; }
   else sleepStreak = 0;
   setMood("neutral");
   say("Hands in. On three…");
@@ -756,7 +771,7 @@ async function breakIt(){
   busy = false;
   setState("done");
 }
-function dressOne(p, i){ p.style.setProperty("--pc1", "#203731"); p.style.setProperty("--pc2", "#FFB612"); p.querySelector(".n").textContent = "G"; }
+function dressOne(p, i){ p.style.setProperty("--pc1", "#203731"); p.style.setProperty("--pc2", "#FFB612"); p.style.setProperty("--pn", "#FFB612"); p.querySelector(".n").textContent = "G"; }
 
 call.addEventListener("click", ()=>{
   if (!call.classList.contains("packers")) return;
@@ -766,7 +781,8 @@ call.addEventListener("click", ()=>{
 field.addEventListener("click", e=>{ if (state === "done" && e.target === field) { sfx("pop"); cheeseBurst(e.clientX, e.clientY, 10); } });
 
 // ---------- share ----------
-function shareUrl(){ return team.custom ? `https://1-2-3-packers.com/?team=${encodeURIComponent(team.short)}` : `https://1-2-3-packers.com/${team.slug}/`; }
+const ORIGIN = /1-2-3-packers\.com$/.test(location.hostname) ? location.protocol + "//1-2-3-packers.com" : "https://1-2-3-packers.com";
+function shareUrl(){ return team.custom ? `${ORIGIN}/?team=${encodeURIComponent(team.short)}` : `${ORIGIN}/${team.slug}/`; }
 function shareText(){
   if (lastSleepy) return `The coach fell asleep in my ${team.short} huddle. Then he yelled PACKERS. (parody)`;
   if (team.slug === "steelers") return `My Steelers huddle just broke. Guess what the coach yelled. 🧀 (parody)`;
