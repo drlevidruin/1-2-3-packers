@@ -133,6 +133,15 @@
   .strip{flex:none;height:50px;display:flex;gap:7px;overflow-x:auto;scroll-snap-type:x proximity;padding:3px 2px 6px;margin:0 -10px;padding-left:10px;padding-right:10px;
     scrollbar-width:none;-webkit-overflow-scrolling:touch}
   .strip::-webkit-scrollbar{display:none}
+  .pickrow{flex:none;display:flex;align-items:center;justify-content:space-between;height:22px;margin:0 2px 2px;font-weight:800;font-size:14px;letter-spacing:.6px;text-transform:uppercase}
+  .pickrow .sw{display:flex;align-items:center;gap:6px;color:#fff;text-shadow:0 1px 0 rgba(0,0,0,.45);white-space:nowrap}
+  .pickrow .sw i{font-style:normal;display:inline-block;animation:swipe 1.3s ease-in-out infinite}
+  @keyframes swipe{0%,100%{transform:translateX(0)}50%{transform:translateX(9px)}}
+  .pickrow button{flex:none;border:0;background:rgba(0,0,0,.4);color:var(--gold);font-weight:800;font-size:13.5px;letter-spacing:.5px;text-transform:uppercase;border-radius:999px;padding:0 11px;height:22px;cursor:pointer}
+  .stripwrap{flex:none;position:relative}
+  .stripwrap::after{content:"\203A";position:absolute;right:-10px;top:0;bottom:6px;width:48px;display:flex;align-items:center;justify-content:flex-end;padding-right:7px;
+    font:400 32px Anton,Impact,sans-serif;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.4);background:linear-gradient(90deg,rgba(14,56,30,0),rgba(14,56,30,.96) 65%);pointer-events:none;transition:opacity .2s}
+  .stripwrap.end::after{opacity:0}
   .chip{flex:none;scroll-snap-align:center;height:40px;min-width:86px;padding:0 12px;border-radius:10px;border:2.5px solid var(--b);background:var(--a);color:var(--b);
     font-weight:800;font-size:15px;letter-spacing:.3px;text-transform:uppercase;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.4)}
   .chip.sel{outline:3px solid #fff;outline-offset:1px;transform:translateY(-1px)}
@@ -209,7 +218,8 @@
 
   <div class="payoff" id="payoff"><p id="payoffText">Pick your team below, then tap the big button. Coach Mike will handle the rest.</p></div>
 
-  <div class="strip" id="strip"></div>
+  <div class="pickrow"><span class="sw">Swipe to find your team <i>👉</i></span><button id="allTeams">All 32 ↓</button></div>
+  <div class="stripwrap" id="stripwrap"><div class="strip" id="strip"></div></div>
 
   <div class="actions">
     <button class="btn" id="go">Get ready to huddle</button>
@@ -514,6 +524,21 @@ ALL.forEach(t=>{
 const oc = document.createElement("button"); oc.className = "chip other"; oc.textContent = "Other…";
 oc.onclick = () => { if (busy) return; $("#sheet").hidden = false; setTimeout(()=>$("#custom2").focus(), 50); };
 strip.appendChild(oc);
+
+// swipe cue: arrow fades at the end, one gentle nudge so people see the row moves
+const swrap = $("#stripwrap");
+let stripTouched = false;
+const markTouched = () => { stripTouched = true; };
+strip.addEventListener("pointerdown", markTouched, {passive:true});
+strip.addEventListener("touchstart", markTouched, {passive:true});
+strip.addEventListener("scroll", () => swrap.classList.toggle("end", strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 4), {passive:true});
+setTimeout(() => {
+  if (stripTouched || reduce) return;
+  const x = strip.scrollLeft;
+  strip.scrollTo({left: x + 140, behavior: "smooth"});
+  setTimeout(() => { if (!stripTouched) strip.scrollTo({left: x, behavior: "smooth"}); }, 750);
+}, 1600);
+$("#allTeams").onclick = () => document.querySelector(".more").scrollIntoView({behavior: reduce ? "auto" : "smooth"});
 
 const grid = $("#teams");
 ALL.forEach(t=>{
@@ -828,7 +853,7 @@ else if (q) {
 pick(start || BY.steelers, {instant:true, keepUrl:true});
 requestAnimationFrame(fit);
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
-setTimeout(()=>{ if (state === "idle") say(runs === 0 ? "Bring it in, boys! Big halftime speech coming up." : nextPep()); }, 700);
+setTimeout(()=>{ if (state === "idle") say(runs === 0 ? "Bring it in, boys!" : nextPep()); }, 700);
 })();
 </script>
 </body>
