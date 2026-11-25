@@ -7,18 +7,18 @@
 <!--META-->
 <title>The Cardinals huddle just broke. Guess who yelled it.</title>
 <meta name="description" content="Tap to break the Cardinals huddle. 1-2-3 PACKERS! (parody)">
-<link rel="canonical" href="https://1-2-3-packers.com/cardinals/">
+<link rel="canonical" href="http://1-2-3-packers.com/cardinals/">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://1-2-3-packers.com/cardinals/">
+<meta property="og:url" content="http://1-2-3-packers.com/cardinals/">
 <meta property="og:title" content="The Cardinals huddle just broke. Guess who yelled it.">
 <meta property="og:description" content="Tap to break the huddle. 1-2-3 PACKERS! (parody)">
-<meta property="og:image" content="https://1-2-3-packers.com/og/cardinals.png">
+<meta property="og:image" content="http://1-2-3-packers.com/og/cardinals.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Cardinals huddle just broke. Guess who yelled it.">
 <meta name="twitter:description" content="Tap to break the huddle. 1-2-3 PACKERS! (parody)">
-<meta name="twitter:image" content="https://1-2-3-packers.com/og/cardinals.png">
+<meta name="twitter:image" content="http://1-2-3-packers.com/og/cardinals.png">
 <!--/META--><script>window.PRESET_TEAM="cardinals"</script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23203731'/><text x='50' y='70' font-size='60' text-anchor='middle' font-family='Arial Black' fill='%23FFB612'>G</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -167,6 +167,15 @@
   .other{display:flex;gap:8px;margin:16px auto 0;background:rgba(0,0,0,.28);padding:8px;border-radius:16px}
   .other input{flex:1;min-width:0;font:700 17px "Barlow Condensed",system-ui,sans-serif;padding:12px 14px;border-radius:10px;border:0;color:#111}
   .other button{flex:none;background:var(--gold);color:var(--green);border:0;font-weight:800;font-size:18px;border-radius:10px;padding:0 18px;cursor:pointer}
+  .hc{flex:none;height:30px;display:flex;align-items:center;gap:3px;padding:0 9px;border:0;border-radius:999px;background:var(--gold);color:var(--green);
+    font:800 16px "Barlow Condensed",system-ui,sans-serif;box-shadow:0 2px 0 rgba(0,0,0,.35);cursor:pointer}
+  .hc b{font-weight:800}
+  .hc.bump{animation:bump .6s cubic-bezier(.3,1.8,.5,1)}
+  @keyframes bump{35%{transform:scale(1.45) rotate(-6deg)}}
+  .score{margin:4px auto 0;background:rgba(0,0,0,.35);border:3px solid var(--gold);border-radius:18px;padding:14px 16px 16px;box-shadow:0 5px 0 rgba(0,0,0,.3)}
+  .sc-l{font-weight:800;font-size:17px;letter-spacing:.6px;text-transform:uppercase}
+  .sc-n{font-size:84px;line-height:1;color:var(--gold);text-shadow:0 5px 0 rgba(0,0,0,.4);margin:6px 0 4px}
+  .sc-r{font-weight:800;font-size:19px}
   .stat{display:inline-block;font-weight:800;font-size:17px;margin:26px 0 0;background:rgba(0,0,0,.3);padding:8px 16px;border-radius:999px}
   .stat b{color:var(--gold);font-size:20px}
   footer{margin:22px auto 0;background:rgba(0,0,0,.35);border-radius:18px;padding:16px 18px}
@@ -207,6 +216,7 @@
   <div class="bar">
     <span class="live">LIVE</span>
     <div class="chyron"><span id="chy">HALFTIME HUDDLE IN PROGRESS</span></div>
+    <button class="hc" id="hc" aria-label="Your huddles">🧀<b id="hcN">0</b></button>
     <button class="mute" id="mute" aria-label="Sound on or off">🔊</button>
   </div>
   <div class="title"><h1 class="disp">1-2-3 <b>PACKERS!</b></h1></div>
@@ -233,13 +243,11 @@
 </div>
 
 <section class="more">
-  <h2 class="disp">PICK ANY TEAM</h2>
-  <div class="teams" id="teams"></div>
-  <div class="other">
-    <input id="custom" maxlength="32" placeholder="Or type ANY team…" enterkeyhint="go" autocomplete="off">
-    <button id="customGo">Go</button>
+  <div class="score" id="score">
+    <div class="sc-l">🧀 Huddles you've broken 🧀</div>
+    <div class="sc-n disp" id="count">0</div>
+    <div class="sc-r" id="rank">Rookie. Go break one.</div>
   </div>
-  <p class="stat">🧀 Your huddles: <b id="count">0</b></p>
   <footer>
     <a class="credit" href="https://x.com/thelpdrive" target="_blank" rel="noopener">Made by <span>𝕏</span> @thelpdrive</a>
     <p class="fine">PARODY. The coach on this page is a cartoon and says nothing real, apart from the reported chant. Not affiliated with the NFL, any team, or any real person. Star names are for fun and may be out of date.
@@ -526,8 +534,17 @@ const ALL = TEAMS.map(([city,name,c1,c2,stars]) => ({label:`${city} ${name}`, sh
 const BY = Object.fromEntries(ALL.map(t=>[t.slug,t]));
 let gen = 0;
 let team = null, state = "idle", runs = 0, sleepStreak = 0, forceSleep = false, lastSleepy = false, lastPayoff = "", busy = false;
-let count = +(localStorage.getItem("p123") || 0);
-$("#count").textContent = count;
+let count = 0; try { count = +(localStorage.getItem("p123") || 0) || 0; } catch(e){}
+const RANKS = [[0,"Rookie. Go break one."],[1,"Welcome to the league."],[3,"Practice squad."],[5,"Starter. Coach knows your name. Wrong team, though."],
+  [10,"Pro Bowl. The cheese is starting to look at you."],[20,"All-Pro. Seek help."],[50,"Hall of Fame, cheese wing."],[100,"Please go outside."]];
+function paintCount(bump){
+  $("#count").textContent = count; $("#hcN").textContent = count;
+  let rk = RANKS[0][1]; for (const [n, t] of RANKS) if (count >= n) rk = t;
+  $("#rank").textContent = rk;
+  if (bump) { const h = $("#hc"); h.classList.remove("bump"); void h.offsetWidth; h.classList.add("bump"); }
+}
+paintCount();
+$("#hc").onclick = () => $("#score").scrollIntoView({behavior: reduce ? "auto" : "smooth", block: "center"});
 
 const picker = $("#picker"), pkGrid = $("#pkGrid");
 function tile(t, onTap){
@@ -552,8 +569,6 @@ $("#pkClose").onclick = closePicker;
 document.addEventListener("keydown", e => { if (e.key === "Escape" && !picker.hidden) closePicker(); });
 if (!window.PRESET_TEAM && !location.search) setTimeout(() => { if (state === "idle" && picker.hidden) $("#pickBtn").classList.add("wiggle"); }, 1800);
 
-const grid = $("#teams");
-ALL.forEach(t => grid.appendChild(tile(t, () => { if (busy) { toast("One sec. Huddle in progress."); return; } pick(t); window.scrollTo({top:0, behavior: reduce ? "auto" : "smooth"}); })));
 
 function teamPep(t){ if (t.custom) return `${t.short}? Love it. Great name. Huddle up.`; return TEAMPEP[t.slug] || `${t.city}! Great city. I think I've been here. Huddle up.`; }
 function teamPayoff(t){
@@ -603,9 +618,7 @@ function submitCustom(input){
   const t = customTeam(raw); pick(t);
   window.scrollTo({top:0, behavior: reduce ? "auto" : "smooth"});
 }
-$("#customGo").onclick = () => submitCustom($("#custom"));
 $("#customGo2").onclick = () => submitCustom($("#custom2"));
-$("#custom").addEventListener("keydown", e=>{ if (e.key === "Enter") submitCustom($("#custom")); });
 $("#custom2").addEventListener("keydown", e=>{ if (e.key === "Enter") submitCustom($("#custom2")); });
 
 
@@ -685,6 +698,7 @@ function stopSleep(){
 }
 function wake(){
   if (state !== "asleep") return;
+  setState("forming");
   clearTimeout(sleepTimer);
   try { snoreStop && snoreStop(); } catch(e){}
   snoreStop = null;
@@ -758,7 +772,7 @@ async function breakIt(){
   confetti();
   await wait(260);
   scatter();
-  runs++; count++; localStorage.setItem("p123", count); $("#count").textContent = count;
+  runs++; count++; try { localStorage.setItem("p123", count); } catch(e){} paintCount(true);
   lastPayoff = lastSleepy ? "The coach fell asleep mid-huddle, woke up, and still said it." : teamPayoff(team);
   payoffBox.classList.remove("hot");
   payoffP.textContent = lastPayoff;
