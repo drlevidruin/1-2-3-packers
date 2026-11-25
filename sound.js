@@ -65,7 +65,7 @@
   function preload() {
     try {
       if (!ctx || loading) return; loading = true;
-      ['one', 'two', 'three', 'packers', 'bringitin'].forEach(function (k) {
+      [].forEach(function (k) { // voice clips off (robot voice); drop a real recording in /audio and list it here
         fetch('/audio/' + k + '.mp3?v=3').then(function (r) { return r.arrayBuffer(); }).then(function (ab) {
           return new Promise(function (ok, no) { var p = ctx.decodeAudioData(ab, ok, no); if (p && p.then) p.then(ok, no); });
         }).then(function (b) { bufs[k] = b; }).catch(function () {});

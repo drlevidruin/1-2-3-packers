@@ -29,16 +29,15 @@
          --c1:#101820; --c2:#FFB612; --u:4px; }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   [hidden]{display:none!important}
-  html,body{margin:0;background:#0b3d1e}
+  html,body{margin:0;background:#0b3d1e;overflow-x:hidden;max-width:100%}
+  html{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-behavior-x:none}
   body{font-family:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;color:#fff;overflow-x:hidden;
     background:repeating-linear-gradient(0deg,var(--grass) 0 60px,var(--grass2) 60px 120px)}
-  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
-    background:repeating-linear-gradient(0deg,transparent 0 119px,rgba(255,255,255,.3) 119px 121px)}
   .disp{font-family:Anton,Impact,"Arial Black",sans-serif;font-weight:400;letter-spacing:.5px}
   button{font-family:inherit;touch-action:manipulation}
 
   /* ===== one-screen app ===== */
-  .app{position:relative;z-index:1;height:100vh;height:100dvh;max-width:560px;margin:0 auto;display:flex;flex-direction:column;
+  .app{position:relative;z-index:1;height:100vh;height:100dvh;max-width:560px;margin:0 auto;display:flex;flex-direction:column;overflow-x:hidden;overflow-x:clip;
     padding:env(safe-area-inset-top) 10px 0;user-select:none;-webkit-user-select:none}
   .bar{flex:none;height:38px;display:flex;align-items:center;gap:8px}
   .live{flex:none;background:var(--red);color:#fff;font-weight:800;font-size:13px;padding:3px 7px;border-radius:4px;letter-spacing:1px}
@@ -56,7 +55,8 @@
     background:var(--c1);color:var(--ink,var(--c2));border:3px solid var(--c2);box-shadow:0 4px 0 rgba(0,0,0,.35);transition:background .2s,color .2s,border-color .2s}
   .teamband span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:21px;letter-spacing:.8px}
 
-  .stage{flex:1;min-height:200px;position:relative;margin:6px 0 4px}
+  .stage{flex:1;min-height:200px;position:relative;margin:6px 0 4px;overflow:hidden}
+  .stage::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 58px,rgba(255,255,255,.26) 58px 60px)}
   .field{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:300px;height:300px}
   .field.shake{animation:shake .5s}
   @keyframes shake{0%,100%{transform:translate(-50%,-50%)}15%{transform:translate(calc(-50% - 12px),calc(-50% + 5px)) rotate(-2deg)}35%{transform:translate(calc(-50% + 10px),calc(-50% - 6px)) rotate(2deg)}55%{transform:translate(calc(-50% - 7px),calc(-50% + 3px))}75%{transform:translate(calc(-50% + 4px),-50%)}}
@@ -158,7 +158,7 @@
   canvas#fx{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:50}
 
   /* ===== below the fold ===== */
-  .more{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:22px 14px 40px;text-align:center}
+  .more{position:relative;z-index:1;max-width:560px;margin:0 auto;overflow:hidden;padding:22px 14px 40px;text-align:center}
   .more h2{font-size:26px;margin:0 0 12px;text-shadow:0 3px 0 rgba(0,0,0,.3)}
   .teams{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
   .t{font-weight:800;font-size:17px;line-height:1.1;border-radius:12px;padding:9px 6px;cursor:pointer;border:3px solid var(--b);
@@ -261,7 +261,7 @@
 <div class="toast" id="toast"></div>
 <canvas id="fx"></canvas>
 
-<script src="/sound.js?v=3"></script>
+<script src="/sound.js?v=4"></script>
 <script src="/share.js?v=3"></script>
 <script>
 (function(){
@@ -486,7 +486,7 @@ function formation(k){
   const fx = 30*(.85 + .15*k), fy = 85 - (1-k)*20;
   place(8, 50 - fx, fy); place(9, 50, fy + 1); place(10, 50 + fx, fy);
 }
-function offscreen(){ players.forEach((p,i)=>place(i, i%2 ? -18 : 118, 25 + (i*7)%65)); }
+function offscreen(){ players.forEach((p,i)=>place(i, i%2 ? -9 : 109, 25 + (i*7)%65)); }
 function scatter(){
   // offense one side, defense the other (zigzag columns so nothing overlaps)
   players.forEach((p,i)=>{
