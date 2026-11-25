@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b3d1e">
+<!--META-->
+<title>The Saints huddle just broke. Guess who yelled it.</title>
+<meta name="description" content="Tap to break the Saints huddle. 1-2-3 PACKERS! (parody)">
+<link rel="canonical" href="https://1-2-3-packers.com/saints/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://1-2-3-packers.com/saints/">
+<meta property="og:title" content="The Saints huddle just broke. Guess who yelled it.">
+<meta property="og:description" content="Tap to break the huddle. 1-2-3 PACKERS! (parody)">
+<meta property="og:image" content="https://1-2-3-packers.com/og/saints.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Saints huddle just broke. Guess who yelled it.">
+<meta name="twitter:description" content="Tap to break the huddle. 1-2-3 PACKERS! (parody)">
+<meta name="twitter:image" content="https://1-2-3-packers.com/og/saints.png">
+<!--/META--><script>window.PRESET_TEAM="saints"</script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23203731'/><text x='50' y='70' font-size='60' text-anchor='middle' font-family='Arial Black' fill='%23FFB612'>G</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{ --grass:#1f6b35; --grass2:#195c2d; --gold:#ffb612; --green:#203731; --red:#e5202e; --navy:#101a2b;
+         --c1:#101820; --c2:#FFB612; --u:4px; }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  [hidden]{display:none!important}
+  html,body{margin:0;background:#0b3d1e}
+  body{font-family:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;color:#fff;overflow-x:hidden;
+    background:repeating-linear-gradient(0deg,var(--grass) 0 60px,var(--grass2) 60px 120px)}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:repeating-linear-gradient(0deg,transparent 0 119px,rgba(255,255,255,.3) 119px 121px)}
+  .disp{font-family:Anton,Impact,"Arial Black",sans-serif;font-weight:400;letter-spacing:.5px}
+  button{font-family:inherit;touch-action:manipulation}
+
+  /* ===== one-screen app ===== */
+  .app{position:relative;z-index:1;height:100vh;height:100dvh;max-width:560px;margin:0 auto;display:flex;flex-direction:column;
+    padding:env(safe-area-inset-top) 10px 0;user-select:none;-webkit-user-select:none}
+  .bar{flex:none;height:38px;display:flex;align-items:center;gap:8px}
+  .live{flex:none;background:var(--red);color:#fff;font-weight:800;font-size:13px;padding:3px 7px;border-radius:4px;letter-spacing:1px}
+  .live::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#fff;margin-right:5px;vertical-align:1px;animation:blink 1s infinite}
+  @keyframes blink{50%{opacity:.2}}
+  .chyron{flex:1;min-width:0;background:var(--navy);border-left:4px solid var(--gold);height:28px;display:flex;align-items:center;padding:0 8px;overflow:hidden}
+  .chyron span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:800;font-size:14px;letter-spacing:.4px;text-transform:uppercase;transition:opacity .25s}
+  .mute{flex:none;width:38px;height:38px;border-radius:10px;border:0;background:rgba(0,0,0,.35);color:#fff;font-size:18px;cursor:pointer}
+
+  .title{flex:none;display:flex;align-items:baseline;justify-content:center;gap:8px;margin:2px 0 4px;line-height:1}
+  .title h1{margin:0;font-size:clamp(28px,8.4vw,44px);text-shadow:0 3px 0 rgba(0,0,0,.35)}
+  .title h1 b{font-weight:400;color:var(--gold)}
+
+  .teamband{flex:none;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;padding:0 12px;
+    background:var(--c1);color:var(--c2);border:3px solid var(--c2);box-shadow:0 4px 0 rgba(0,0,0,.35);transition:background .2s,color .2s,border-color .2s}
+  .teamband span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:21px;letter-spacing:.8px}
+
+  .stage{flex:1;min-height:200px;position:relative;margin:6px 0 4px}
+  .field{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:300px;height:300px}
+  .field.shake{animation:shake .5s}
+  @keyframes shake{0%,100%{transform:translate(-50%,-50%)}15%{transform:translate(calc(-50% - 12px),calc(-50% + 5px)) rotate(-2deg)}35%{transform:translate(calc(-50% + 10px),calc(-50% - 6px)) rotate(2deg)}55%{transform:translate(calc(-50% - 7px),calc(-50% + 3px))}75%{transform:translate(calc(-50% + 4px),-50%)}}
+
+  .pl{position:absolute;width:calc(var(--u)*14);height:calc(var(--u)*14);transform:translate(-50%,-50%);z-index:2;
+    transition:left .7s cubic-bezier(.3,1.35,.5,1),top .7s cubic-bezier(.3,1.35,.5,1)}
+  .helmet{position:absolute;inset:0;border-radius:50% 50% 46% 46%;background:var(--pc1);border:calc(var(--u)*.9) solid var(--pc2);
+    box-shadow:0 calc(var(--u)*1.1) 0 rgba(0,0,0,.35), inset 0 calc(var(--u)*-1.4) 0 rgba(0,0,0,.18);
+    display:grid;place-items:center;overflow:hidden;transition:background .15s,border-color .15s}
+  .helmet::before{content:"";position:absolute;top:-10%;bottom:-10%;left:50%;width:22%;transform:translateX(-50%);background:var(--pc2);opacity:.5}
+  .helmet .n{position:relative;font-family:Anton,Impact,sans-serif;font-size:calc(var(--u)*6);line-height:1;color:var(--pc2);
+    text-shadow:0 0 calc(var(--u)*.8) var(--pc1),0 0 calc(var(--u)*.8) var(--pc1),0 0 calc(var(--u)*.8) var(--pc1)}
+  .pl.star{z-index:4}
+  .pl.star .helmet{box-shadow:0 0 0 calc(var(--u)*.7) var(--gold),0 calc(var(--u)*1.1) 0 rgba(0,0,0,.35)}
+  .pl .tag{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:calc(var(--u)*1.2);white-space:nowrap;
+    font-weight:800;font-size:max(10px,calc(var(--u)*3.3));line-height:1.15;text-transform:uppercase;background:#000;color:#fff;
+    padding:1px 6px;border-radius:5px;border:1.5px solid var(--gold)}
+  .pl.flip .helmet{animation:flipj .35s}
+  @keyframes flipj{0%{transform:scale(1)}40%{transform:scale(1.35) rotate(12deg);filter:brightness(2)}100%{transform:scale(1)}}
+  .pl .tag{transition:opacity .2s}
+  .field.broke .pl .tag{opacity:0}
+  .pl.poke{transition:left .35s ease,top .35s ease}
+
+  .coach{position:absolute;left:50%;top:55%;width:calc(var(--u)*30);transform:translate(-50%,-50%);z-index:3;cursor:pointer;
+    filter:drop-shadow(0 calc(var(--u)*1.2) 0 rgba(0,0,0,.35));transition:transform .15s}
+  .coach svg{width:100%;display:block;overflow:visible}
+  .coach.jump{animation:jump .45s}
+  @keyframes jump{30%{transform:translate(-50%,-62%) scale(1.08)}}
+  .coach.yell{transform:translate(-50%,-50%) scale(1.14)}
+  .coach.spin{animation:spin .8s}
+  @keyframes spin{to{transform:translate(-50%,-50%) rotate(720deg)}}
+  .coach .head{transform-origin:100px 190px}
+  .coach.m-asleep .head{animation:bob 1.3s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:rotate(12deg)}50%{transform:rotate(16deg) translateY(4px)}}
+  .coach.m-yell .head{animation:jit .08s infinite}
+  @keyframes jit{50%{transform:translate(1.5px,-1px)}}
+  .coach .talk{transform-origin:100px 160px;animation:talk .13s infinite alternate}
+  @keyframes talk{to{transform:scaleY(.35)}}
+  .coach .eyes-blink{transform-origin:100px 112px;animation:eb 3.2s infinite}
+  @keyframes eb{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+  .coach .zz{animation:zz 1.6s ease-in-out infinite}
+  .coach .zz2{animation:zz 1.6s .5s ease-in-out infinite}
+  .coach .zz3{animation:zz 1.6s 1s ease-in-out infinite}
+  @keyframes zz{0%{opacity:0;transform:translate(0,0)}30%{opacity:1}100%{opacity:0;transform:translate(18px,-30px)}}
+  .coach .drool{animation:drool 1.3s ease-in infinite}
+  @keyframes drool{0%{transform:scaleY(.4);opacity:0}40%{opacity:1}100%{transform:scaleY(1.3) translateY(6px);opacity:0}}
+
+  .bubble{position:absolute;left:50%;top:1%;transform:translateX(-50%);width:max-content;max-width:94%;z-index:6;background:#fff;color:#111;
+    border-radius:14px;padding:7px 12px;font-weight:800;font-size:max(15px,calc(var(--u)*4.4));line-height:1.12;text-align:center;
+    box-shadow:0 4px 0 rgba(0,0,0,.35);opacity:0;transition:opacity .2s;pointer-events:none;min-height:1.12em}
+  .bubble.on{opacity:1}
+  .bubble::after{content:"";position:absolute;left:50%;top:100%;transform:translateX(-50%);border:9px solid transparent;border-top-color:#fff}
+  .bubble.zzz{background:#cfe3ff;font-style:italic}
+  .bubble.zzz::after{border-top-color:#cfe3ff}
+
+  .call{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%) scale(.5);z-index:8;opacity:0;pointer-events:none;white-space:nowrap;
+    font-family:Anton,Impact,sans-serif;color:#fff;font-size:calc(var(--u)*30);line-height:1;
+    -webkit-text-stroke:calc(var(--u)*.8) #000;paint-order:stroke fill;text-shadow:0 calc(var(--u)*1.2) 0 rgba(0,0,0,.6)}
+  .call.show{opacity:1;transform:translate(-50%,-50%) scale(1);transition:transform .16s cubic-bezier(.3,1.8,.5,1),opacity .08s}
+  .call.packers{color:var(--gold);font-size:calc(var(--u)*21);top:47%;pointer-events:auto;cursor:pointer;-webkit-text-stroke:calc(var(--u)*1) var(--green)}
+  .call.packers.show{transform:translate(-50%,-50%) scale(1) rotate(-4deg);transition:transform .22s cubic-bezier(.2,2,.4,1),opacity .05s}
+  .call.packers.wob{animation:wob .5s}
+  @keyframes wob{25%{transform:translate(-50%,-50%) scale(1.12) rotate(4deg)}60%{transform:translate(-50%,-50%) scale(.95) rotate(-7deg)}}
+  .flash{position:absolute;inset:-20px;background:#fff;opacity:0;pointer-events:none;z-index:7}
+  .flash.go{animation:fl .32s}
+  @keyframes fl{0%{opacity:.85}100%{opacity:0}}
+
+  .payoff{flex:none;height:60px;margin:0 0 6px;background:var(--navy);border-left:6px solid var(--gold);border-radius:8px;
+    display:flex;align-items:center;padding:0 12px;box-shadow:0 3px 0 rgba(0,0,0,.35)}
+  .payoff p{margin:0;font-weight:800;font-size:15.5px;line-height:1.1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .payoff p small{font-weight:600;font-size:12.5px;opacity:.85;display:block}
+  .payoff.hot{border-left-color:var(--red)}
+
+  .strip{flex:none;height:50px;display:flex;gap:7px;overflow-x:auto;scroll-snap-type:x proximity;padding:3px 2px 6px;margin:0 -10px;padding-left:10px;padding-right:10px;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .strip::-webkit-scrollbar{display:none}
+  .chip{flex:none;scroll-snap-align:center;height:40px;min-width:86px;padding:0 12px;border-radius:10px;border:2.5px solid var(--b);background:var(--a);color:var(--b);
+    font-weight:800;font-size:15px;letter-spacing:.3px;text-transform:uppercase;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.4)}
+  .chip.sel{outline:3px solid #fff;outline-offset:1px;transform:translateY(-1px)}
+  .chip.other{--a:#fff;--b:#203731}
+
+  .actions{flex:none;display:flex;gap:8px;padding:2px 0 max(12px,env(safe-area-inset-bottom))}
+  .btn{flex:1;height:62px;border:0;border-radius:16px;cursor:pointer;font-family:Anton,Impact,sans-serif;font-size:clamp(21px,6vw,27px);letter-spacing:.8px;
+    background:var(--gold);color:var(--green);box-shadow:0 6px 0 #b37f00;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 10px}
+  .btn:active{transform:translateY(4px);box-shadow:0 2px 0 #b37f00}
+  .btn:disabled{opacity:.6}
+  .btn.red{background:var(--red);color:#fff;box-shadow:0 6px 0 #8f0f18}
+  .btn.red:active{box-shadow:0 2px 0 #8f0f18}
+  .btn.pulse{animation:pulse .9s infinite}
+  @keyframes pulse{50%{transform:scale(1.035)}}
+  .btn.sec{flex:0 0 31%;background:#fff;color:var(--green);box-shadow:0 6px 0 #9aa}
+  .hint{position:absolute;right:16px;bottom:100%;margin-bottom:4px;font-weight:800;font-size:15px;background:#fff;color:#111;padding:3px 9px;border-radius:8px;animation:hb .7s infinite alternate}
+  @keyframes hb{to{transform:translateY(-5px)}}
+  .actions{position:relative}
+
+  canvas#fx{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:50}
+
+  /* ===== below the fold ===== */
+  .more{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:22px 14px 40px;text-align:center}
+  .more h2{font-size:26px;margin:0 0 12px;text-shadow:0 3px 0 rgba(0,0,0,.3)}
+  .teams{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  .t{font-weight:800;font-size:17px;line-height:1.1;border-radius:12px;padding:9px 6px;cursor:pointer;border:3px solid var(--b);
+    background:var(--a);color:var(--b);min-height:56px;box-shadow:0 4px 0 rgba(0,0,0,.35);text-transform:uppercase}
+  .t small{display:block;font-weight:700;opacity:.85;font-size:13px;text-transform:none}
+  .other{display:flex;gap:8px;margin:16px auto 0;background:rgba(0,0,0,.28);padding:8px;border-radius:16px}
+  .other input{flex:1;min-width:0;font:700 17px "Barlow Condensed",system-ui,sans-serif;padding:12px 14px;border-radius:10px;border:0;color:#111}
+  .other button{flex:none;background:var(--gold);color:var(--green);border:0;font-weight:800;font-size:18px;border-radius:10px;padding:0 18px;cursor:pointer}
+  .stat{display:inline-block;font-weight:800;font-size:17px;margin:26px 0 0;background:rgba(0,0,0,.3);padding:8px 16px;border-radius:999px}
+  .stat b{color:var(--gold);font-size:20px}
+  footer{margin:22px auto 0;background:rgba(0,0,0,.35);border-radius:18px;padding:16px 18px}
+  .credit{display:inline-flex;align-items:center;gap:8px;font:800 18px "Barlow Condensed",system-ui,sans-serif;color:#111;background:#fff;
+    text-decoration:none;border-radius:999px;padding:9px 18px;box-shadow:0 4px 0 rgba(0,0,0,.35)}
+  .fine{font-family:system-ui,sans-serif;font-size:11.5px;line-height:1.5;opacity:.72;margin:14px 0 0}
+  .fine a{color:#fff}
+
+  /* sheet */
+  .sheet{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;justify-content:center}
+  .sheet .box{width:min(560px,100%);background:#123d22;border-top:4px solid var(--gold);border-radius:18px 18px 0 0;padding:18px 16px max(18px,env(safe-area-inset-bottom))}
+  .sheet h3{margin:0 0 10px;font-size:24px}
+  .sheet .other{margin:0}
+  .toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 50px);transform:translateX(-50%);background:#000;color:#fff;font-weight:800;font-size:16px;
+    padding:9px 16px;border-radius:999px;opacity:0;transition:opacity .2s;z-index:70;pointer-events:none;max-width:90vw;text-align:center}
+  .toast.on{opacity:.92}
+
+  @media (prefers-reduced-motion: reduce){
+    .field.shake,.coach.m-yell .head,.btn.pulse,.hint{animation:none}
+  }
+  @media (min-width:700px){ .app{padding-top:10px} .teams{grid-template-columns:repeat(4,1fr)} }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="bar">
+    <span class="live">LIVE</span>
+    <div class="chyron"><span id="chy">HALFTIME HUDDLE IN PROGRESS</span></div>
+    <button class="mute" id="mute" aria-label="Sound on or off">🔊</button>
+  </div>
+  <div class="title"><h1 class="disp">1-2-3 <b>PACKERS!</b></h1></div>
+  <div class="teamband" id="band"><span class="disp" id="bandText">THE STEELERS HUDDLE</span></div>
+
+  <div class="stage" id="stage">
+    <div class="field" id="field">
+      <div class="bubble" id="bubble"></div>
+      <div id="ring"></div>
+      <div class="coach" id="coach" role="button" aria-label="Coach"></div>
+      <div class="call" id="call"></div>
+      <div class="flash" id="flash"></div>
+    </div>
+  </div>
+
+  <div class="payoff" id="payoff"><p id="payoffText">Pick your team below, then tap the big button. Coach Mike will handle the rest.</p></div>
+
+  <div class="strip" id="strip"></div>
+
+  <div class="actions">
+    <button class="btn" id="go">Get ready to huddle</button>
+    <button class="btn sec" id="sec" hidden>Again</button>
+  </div>
+</div>
+
+<section class="more">
+  <h2 class="disp">PICK ANY TEAM</h2>
+  <div class="teams" id="teams"></div>
+  <div class="other">
+    <input id="custom" maxlength="32" placeholder="Or type ANY team…" enterkeyhint="go" autocomplete="off">
+    <button id="customGo">Go</button>
+  </div>
+  <p class="stat">🧀 Your huddles: <b id="count">0</b></p>
+  <footer>
+    <a class="credit" href="https://x.com/thelpdrive" target="_blank" rel="noopener">Made by <span>𝕏</span> @thelpdrive</a>
+    <p class="fine">PARODY. The coach on this page is a cartoon and says nothing real, apart from the reported chant. Not affiliated with the NFL, any team, or any real person. Star names are for fun and may be out of date.
+    What happened: Aaron Rodgers said on The Pat McAfee Show (Nov 24, 2026) that Mike McCarthy broke the Steelers' halftime huddle in the 19-16 loss to the Eagles by saying "1, 2, 3, Packers!" He also said McCarthy fell asleep in a QB meeting. Those are Rodgers's claims; McCarthy had not responded. (<a href="https://sports.yahoo.com/nfl/articles/aaron-rodgers-blast-mccarthy-1-191058565.html" target="_blank" rel="noopener">the story</a>)</p>
+  </footer>
+</section>
+
+<div class="sheet" id="sheet" hidden>
+  <div class="box">
+    <h3 class="disp">ANY TEAM. WE ARE NOT THE COPS.</h3>
+    <div class="other">
+      <input id="custom2" maxlength="32" placeholder="Lakers? Your kid's soccer team?" enterkeyhint="go" autocomplete="off">
+      <button id="customGo2">Huddle</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<canvas id="fx"></canvas>
+
+<script src="/sound.js"></script>
+<script src="/share.js"></script>
+<script>
+(function(){
+'use strict';
+// [city, name, color1, color2, stars [name, number]]
+const TEAMS = [
+  ["Pittsburgh","Steelers","#101820","#FFB612",[["Rodgers",8],["T.J. Watt",90],["Metcalf",4]]],
+  ["Arizona","Cardinals","#97233F","#FFFFFF",[["Kyler",1],["Harrison Jr.",18],["McBride",85]]],
+  ["Atlanta","Falcons","#A71930","#000000",[["Bijan",7],["London",5],["Penix",9]]],
+  ["Baltimore","Ravens","#241773","#9E7C0C",[["Lamar",8],["Henry",22],["Flowers",4]]],
+  ["Buffalo","Bills","#00338D","#FFFFFF",[["Josh Allen",17],["Cook",4],["Kincaid",86]]],
+  ["Carolina","Panthers","#0085CA","#101820",[["Bryce",9],["McMillan",4],["Hubbard",30]]],
+  ["Chicago","Bears","#0B162A","#C83803",[["Caleb",18],["Odunze",15],["DJ Moore",2]]],
+  ["Cincinnati","Bengals","#FB4F14","#000000",[["Burrow",9],["Ja'Marr",1],["Higgins",5]]],
+  ["Cleveland","Browns","#311D00","#FF3C00",[["Garrett",95],["Shedeur",12],["Jeudy",3]]],
+  ["Dallas","Cowboys","#041E42","#FFFFFF",[["Dak",4],["CeeDee",88],["Pickens",3]]],
+  ["Denver","Broncos","#FB4F14","#002244",[["Bo Nix",10],["Sutton",14],["Surtain",2]]],
+  ["Detroit","Lions","#0076B6","#FFFFFF",[["Goff",16],["St. Brown",14],["Gibbs",26]]],
+  ["Green Bay","Packers","#203731","#FFB612",[["Love",10],["Jacobs",8],["Parsons",1]]],
+  ["Houston","Texans","#03202F","#A71930",[["Stroud",7],["Nico",12],["Anderson",51]]],
+  ["Indianapolis","Colts","#002C5F","#FFFFFF",[["J. Taylor",28],["D. Jones",17],["Pittman",11]]],
+  ["Jacksonville","Jaguars","#006778","#D7A22A",[["Lawrence",16],["Hunter",12],["BTJ",7]]],
+  ["Kansas City","Chiefs","#E31837","#FFB81C",[["Mahomes",15],["Kelce",87],["C. Jones",95]]],
+  ["Las Vegas","Raiders","#000000","#A5ACAF",[["Bowers",89],["Crosby",98],["Geno",7]]],
+  ["Los Angeles","Chargers","#0080C6","#FFC20E",[["Herbert",10],["McConkey",15],["Derwin",3]]],
+  ["Los Angeles","Rams","#003594","#FFD100",[["Stafford",9],["Puka",12],["Davante",17]]],
+  ["Miami","Dolphins","#008E97","#FFFFFF",[["Tua",1],["Waddle",17],["Achane",28]]],
+  ["Minnesota","Vikings","#4F2683","#FFC62F",[["J.J. McCarthy",9],["Jefferson",18],["Addison",3]]],
+  ["New England","Patriots","#002244","#C60C30",[["Maye",10],["Diggs",8],["Henderson",32]]],
+  ["New Orleans","Saints","#101820","#D3BC8D",[["Kamara",41],["Olave",12],["D. Davis",56]]],
+  ["New York","Giants","#0B2265","#FFFFFF",[["Dart",6],["Nabers",1],["Burns",0]]],
+  ["New York","Jets","#125740","#FFFFFF",[["G. Wilson",5],["Breece",20],["Fields",7]]],
+  ["Philadelphia","Eagles","#004C54","#A5ACAF",[["Hurts",1],["Saquon",26],["A.J. Brown",11]]],
+  ["San Francisco","49ers","#AA0000","#B3995D",[["Purdy",13],["CMC",23],["Kittle",85]]],
+  ["Seattle","Seahawks","#002244","#69BE28",[["Darnold",14],["JSN",11],["K. Walker",9]]],
+  ["Tampa Bay","Buccaneers","#D50A0A","#34302B",[["Baker",6],["Evans",13],["Bucky",7]]],
+  ["Tennessee","Titans","#0C2340","#4B92DB",[["Cam Ward",1],["Ridley",0],["Simmons",98]]],
+  ["Washington","Commanders","#5A1414","#FFB612",[["Jayden",5],["McLaurin",17],["Deebo",1]]],
+];
+
+const PAYOFF = {
+  cardinals:"Cardinals fans have survived three stadiums and a thousand heartbreaks. This is new.",
+  falcons:"Falcons fans looked at the scoreboard out of habit. It said 28-3. In their heads.",
+  ravens:"The Raven looked at the huddle and said one word: Nevermore.",
+  bills:"Bills Mafia has already found a table. The table does not survive.",
+  panthers:"Charlotte had questions. Nobody asked for this answer.",
+  bears:"Chicago can survive anything except that word coming out of its own huddle.",
+  bengals:"Who Dey? Who Dey think gonna break the huddle with THAT word?",
+  browns:"Browns fans have seen worse. They are checking. They will get back to you.",
+  cowboys:"Cowboys fans know this coach. They still were not ready.",
+  broncos:"Mile High air is thin. This chant is thinner.",
+  lions:"Detroit finally had a great year. And now this.",
+  packers:"For once the coach said the right thing. Lambeau stood up. It's perfect.",
+  texans:"Everything is bigger in Texas, including the confusion.",
+  colts:"The Colts have had quarterback turnover for years. The chant has zero turnover.",
+  jaguars:"Duval stood up and shouted JAGS. The coach was louder.",
+  chiefs:"Chiefs fans have seen every possible ending. Not this one.",
+  raiders:"Oakland, LA, Vegas: three cities, one huddle break nobody ordered.",
+  chargers:"Half the stadium thought it was a Rams game. The other half now thinks it's a Packers game.",
+  rams:"Greatest Show on Turf, now showing: confusion.",
+  dolphins:"Miami heat met a Green Bay chant. The air conditioning quit.",
+  vikings:"Minnesota Nice nodded politely at the chant. Then remembered four Super Bowl losses.",
+  patriots:"Do your job, they said. The coach did his.",
+  saints:"Who dat say Packers? Coach dat.",
+  giants:"The tabloid headline is already written. Giants fans are not ready to read it.",
+  jets:"Jets fans survived more drama than any fan base on earth. They did not need another episode.",
+  eagles:"Philly booed the chant. Then booed the booing. Then booed the coach's visor.",
+  steelers:"Steel City has seen a lot. A cartoon coach screaming THIS is somehow new.",
+  "49ers":"The Bay stood up, looked at the coach, and sat back down.",
+  seahawks:"Packers fans say Fail Mary. Seahawks fans say catch. Nobody wins.",
+  buccaneers:"The pirate ship fired its cannon. The coach fired back.",
+  titans:"Nashville hot chicken. Green Bay hot take.",
+  commanders:"Washington has had a few names. This one is not on the list. Yet.",
+};
+const PEP = [
+  "Alright team. Listen up. We are the… what are we again?",
+  "This one's for Lambeau! Wait. Which stadium is this?",
+  "Remember the frozen tundra. Anyone have a jacket?",
+  "Today we run the play I drew on a napkin in 2007.",
+  "Breathe in. Breathe out. Eat cheese.",
+  "Offense, you're the offense. Defense, you're… also here.",
+  "I have a great feeling about this. I also have a clipboard.",
+  "No distractions. Except cheese. Cheese is allowed.",
+  "We play four quarters. Or three. Someone check.",
+  "I want everyone to think about what they did. I forget what that was.",
+  "It's a game of inches. And chants.",
+  "This team is special. This team is… which team is this?",
+  "Hands in. Not on the cheese. Hands IN.",
+  "Green Bay, Dallas, Pittsburgh… it's all one big huddle to me.",
+  "Somebody check if my headset is on. Hello? Hello?",
+  "Stay focused. Zero in on the goal. The goal is… *yawn*… a goal.",
+  "I have one rule. I forgot the rule. Rule two: huddle.",
+  "We practiced this. We did. Probably.",
+  "The wind is a factor. So is cheese. Mostly cheese.",
+  "Say it with me. No, wait. Not yet.",
+  "Quick reminder: the other team is not our team. Good luck.",
+  "I love this. I love you guys. *yawn* I love naps.",
+  "Look at the scoreboard. Now look at me. Now look at the scoreboard.",
+  "When I say break, you say nothing. I'm just saying break.",
+  "Hot take: cheese is the real MVP.",
+  "I called a play. It's a play. It's called 'the play'.",
+  "*yawn* Sorry. Long drive from Green Bay. I mean Pittsburgh. I mean here.",
+  "Heads up, everybody. Just kidding. No heads up.",
+  "Whatever happens out there, I'm proud of… what's our mascot?",
+  "Big game. Big moment. Big… cheese. Sorry. Huddle.",
+];
+const TEAMPEP = {
+  steelers:"Terrible Towels up! Wait, I'm told those are yours, not mine.",
+  cowboys:"I know this place. There's a big TV. Hello, big TV.",
+  packers:"OH. It's us. Hi. I feel weirdly at home.",
+  bears:"Chicago! I've been here. It was cold. So is this.",
+  eagles:"Philly! I'm told you boo. I'll take it as a compliment.",
+  vikings:"McCarthy at quarterback? Great name. Love the name. Huddle up.",
+  chiefs:"Kansas City! I hear the barbecue is incredible. Huddle first.",
+  patriots:"Do your job. I have no further notes.",
+  bills:"I'm told tables are involved. I'll stand over here.",
+  seahawks:"Loud building, I hear. I'll use my indoor voice. Mostly.",
+  lions:"Detroit! Great year. Don't ruin it. Huddle.",
+  jets:"Quick huddle, no drama. Who am I kidding.",
+  giants:"Big Apple. Small huddle. Let's go.",
+  raiders:"Raider Nation, I come in peace. Mostly cheese.",
+  "49ers":"Bay Area! I brought sourdough. Huddle.",
+  dolphins:"It's warm. I'm sweating. Huddle.",
+};
+const CHY = [
+  "HALFTIME HUDDLE IN PROGRESS",
+  'RODGERS SAYS IT WAS "THE NAIL IN THE COFFIN"',
+  "OFFENSE ONE SIDE, DEFENSE THE OTHER, COACH IN THE MIDDLE",
+  "DEVELOPING: PLAYERS RECEIVED NO HEADS UP (CARTOON)",
+  "RUDOLPH STARTS FRIDAY VS BRONCOS, PER PITTSBURGH",
+  "THE COACH ON THIS PAGE IS A CARTOON",
+  "CHEESE ADVISORY IN EFFECT",
+];
+const ESC = {2:"HE DID IT AGAIN.",3:"THE PLAYERS NOW LOOK AT EACH OTHER BEFORE THE BREAK.",4:"PLAYERS WERE PROMISED A DIFFERENT CHANT.",
+  5:"FIVE HUDDLES. THE LEAGUE OFFICE HAS NOT BEEN NOTIFIED.",7:"LUCKY SEVEN. NOT LUCKY.",10:"TEN HUDDLES. YOU LEARNED NOTHING.",
+  20:"THE PLAYERS ARE BREAKING EARLY. THE COACH DOES NOT NOTICE.",50:"FIFTY. YOU ARE THE COACH NOW.",100:"PLEASE GO OUTSIDE."};
+const BREAK_LABELS = ["Break the huddle!","Break it again!","He's gonna do it again","Say it. Live with it."];
+const WAKE = ["He's up. He's ready. He has a chant.","Rubs eyes. Checks clipboard. Finds chant.","Back in the game. Allegedly."];
+const POKE = ["Zzz… five more minutes…","Mmm… cheese…","Zzz… 1-2-3-PACK… zzz…","Zzz… is it halftime…","*snort* …who moved Lambeau…"];
+
+// ---------- helpers ----------
+const $ = s => document.querySelector(s);
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const rnd = a => a[Math.floor(Math.random()*a.length)];
+const slug = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+const S = window.SFX || {};
+const sfx = (name, ...a) => { try { return S[name] ? S[name](...a) : undefined; } catch(e){} };
+const buzz = p => { try{ navigator.vibrate && navigator.vibrate(p); }catch(e){} };
+
+const field = $("#field"), stage = $("#stage"), ring = $("#ring"), coach = $("#coach"), bubble = $("#bubble"),
+      call = $("#call"), go = $("#go"), sec = $("#sec"), payoffP = $("#payoffText"), payoffBox = $("#payoff"), chy = $("#chy");
+
+function toast(m){ const t=$("#toast"); t.textContent=m; t.classList.add("on"); clearTimeout(toast._t); toast._t=setTimeout(()=>t.classList.remove("on"),1800); }
+
+// ---------- coach svg ----------
+function coachSVG(mood, visor){
+  visor = visor || "#111";
+  const eyes = {
+    neutral:'<g class="eyes-blink"><ellipse cx="76" cy="112" rx="7" ry="8" fill="#222"/><ellipse cx="124" cy="112" rx="7" ry="8" fill="#222"/><circle cx="78" cy="109" r="2.2" fill="#fff"/><circle cx="126" cy="109" r="2.2" fill="#fff"/></g>',
+    pep:'<g><ellipse cx="76" cy="111" rx="8" ry="9" fill="#222"/><ellipse cx="124" cy="111" rx="8" ry="9" fill="#222"/><circle cx="78" cy="108" r="2.5" fill="#fff"/><circle cx="126" cy="108" r="2.5" fill="#fff"/></g>',
+    yell:'<g stroke="#222" stroke-width="6" stroke-linecap="round" fill="none"><path d="M64 104 L84 112 L64 118"/><path d="M136 104 L116 112 L136 118"/></g>',
+    asleep:'<g stroke="#222" stroke-width="5" stroke-linecap="round" fill="none"><path d="M64 113 Q76 121 88 113"/><path d="M112 113 Q124 121 136 113"/></g>'
+  }[mood];
+  const brows = mood==="yell" ? '<path d="M58 92 L90 102" stroke="#5a3a28" stroke-width="8" stroke-linecap="round"/><path d="M142 92 L110 102" stroke="#5a3a28" stroke-width="8" stroke-linecap="round"/>'
+    : mood==="pep" ? '<path d="M60 92 Q74 84 90 92" stroke="#5a3a28" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M110 92 Q126 84 140 92" stroke="#5a3a28" stroke-width="7" fill="none" stroke-linecap="round"/>'
+    : '<path d="M60 98 L88 95" stroke="#5a3a28" stroke-width="7" stroke-linecap="round"/><path d="M112 95 L140 98" stroke="#5a3a28" stroke-width="7" stroke-linecap="round"/>';
+  const mouth = {
+    neutral:'<path d="M80 158 Q100 166 120 158" stroke="#5a2a1a" stroke-width="5" fill="none" stroke-linecap="round"/>',
+    pep:'<g class="talk"><ellipse cx="100" cy="160" rx="15" ry="11" fill="#5a1414"/><ellipse cx="100" cy="166" rx="9" ry="4" fill="#e86a6a"/></g>',
+    yell:'<g><path d="M70 146 Q100 136 130 146 Q134 186 100 192 Q66 186 70 146 Z" fill="#4a0f0f" stroke="#5a2a1a" stroke-width="3"/><rect x="80" y="144" width="40" height="8" rx="3" fill="#fff"/><ellipse cx="100" cy="180" rx="17" ry="8" fill="#e86a6a"/></g>',
+    asleep:'<g><ellipse cx="96" cy="160" rx="8" ry="6" fill="#5a1414"/><path class="drool" d="M102 164 q3 8 0 14 q-3 -6 0 -14" fill="#9fd3ff"/></g>'
+  }[mood];
+  const extra = mood==="yell" ? '<g stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".9"><path d="M14 70 L-6 58"/><path d="M8 110 L-14 110"/><path d="M14 150 L-6 162"/><path d="M186 70 L206 58"/><path d="M192 110 L214 110"/><path d="M186 150 L206 162"/></g>'
+    : mood==="asleep" ? '<g font-family="Anton,Impact,sans-serif" fill="#fff" stroke="#000" stroke-width="1.2"><text class="zz" x="150" y="64" font-size="26">Z</text><text class="zz2" x="166" y="44" font-size="20">z</text><text class="zz3" x="178" y="28" font-size="16">z</text></g>' : '';
+  const visorTilt = mood==="asleep" ? ' transform="rotate(-8 100 80)"' : '';
+  return `<svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M30 240 Q34 200 70 192 L130 192 Q166 200 170 240 Z" fill="${visor}" stroke="#000" stroke-width="3"/>
+  <path d="M84 192 L100 214 L116 192" fill="#fff" stroke="#000" stroke-width="2"/>
+  <g class="head">
+    <path d="M38 98 Q100 8 162 98" fill="none" stroke="#222" stroke-width="10"/>
+    <ellipse cx="100" cy="114" rx="64" ry="74" fill="#F3C9A0" stroke="#7A4B2A" stroke-width="4"/>
+    <rect x="22" y="94" width="26" height="42" rx="11" fill="#222"/><rect x="152" y="94" width="26" height="42" rx="11" fill="#222"/>
+    <path d="M40 130 Q46 172 84 176" fill="none" stroke="#222" stroke-width="5"/><circle cx="86" cy="176" r="7" fill="#333"/>
+    <g${visorTilt}><path d="M34 74 Q100 36 166 74 L170 86 Q100 64 30 86 Z" fill="${visor}"/>
+    <path d="M30 86 Q100 64 170 86 Q100 112 30 86 Z" fill="${visor}" stroke="#000" stroke-width="2.5"/>
+    <path d="M44 84 Q100 70 156 84" stroke="rgba(255,255,255,.35)" stroke-width="3" fill="none"/></g>
+    ${brows}${eyes}
+    <ellipse cx="100" cy="134" rx="12" ry="10" fill="#e59a76"/>
+    <circle cx="60" cy="142" r="10" fill="#f08f7a" opacity=".55"/><circle cx="140" cy="142" r="10" fill="#f08f7a" opacity=".55"/>
+    ${mouth}
+    <path d="M66 180 Q100 198 134 180" stroke="#7A4B2A" stroke-width="3" fill="none" opacity=".5"/>
+  </g>${extra}</svg>`;
+}
+let mood = "";
+function setMood(m){
+  if (m === mood) return; mood = m;
+  coach.className = "coach m-" + m;
+  coach.innerHTML = coachSVG(m, team ? team.c1 : "#111");
+}
+
+// ---------- field sizing ----------
+function fit(){
+  const r = stage.getBoundingClientRect();
+  const s = Math.max(180, Math.min(r.width, r.height));
+  field.style.width = field.style.height = s + "px";
+  field.style.setProperty("--u", (s/100) + "px");
+}
+addEventListener("resize", fit); addEventListener("orientationchange", () => setTimeout(fit, 250));
+
+// ---------- players ----------
+const N = 11, STAR_SLOTS = [9, 8, 10], players = [];
+for (let i=0;i<N;i++){
+  const d = document.createElement("div"); d.className = "pl";
+  d.innerHTML = '<div class="helmet"><span class="n"></span></div><span class="tag" hidden></span>';
+  ring.appendChild(d); players.push(d);
+}
+function place(i, x, y){ players[i].style.left = x + "%"; players[i].style.top = y + "%"; }
+// k = how loose the huddle is: 1 = waiting, ~.66 = huddled, ~.5 = hands in
+function formation(k){
+  for (let i=0;i<8;i++){ const a = (160 + i*220/7) * Math.PI/180; place(i, 50 + Math.cos(a)*40*k, 54 + Math.sin(a)*31*k); }
+  const fx = 30*(.85 + .15*k), fy = 85 - (1-k)*20;
+  place(8, 50 - fx, fy); place(9, 50, fy + 1); place(10, 50 + fx, fy);
+}
+function offscreen(){ players.forEach((p,i)=>place(i, i%2 ? -18 : 118, 25 + (i*7)%65)); }
+function scatter(){
+  // offense one side, defense the other (zigzag columns so nothing overlaps)
+  players.forEach((p,i)=>{
+    const left = i < 5, k = left ? i : i-5, n = left ? 5 : 6;
+    const y = 24 + k * (66/(n-1));
+    const x = left ? (k%2 ? 22 : 9) : (k%2 ? 78 : 91);
+    place(i, x, y);
+  });
+}
+function dress(t, green){
+  const used = new Set(t.stars.map(s=>s[1]));
+  players.forEach((p,i)=>{
+    const k = STAR_SLOTS.indexOf(i);
+    p.classList.toggle("star", k >= 0);
+    p.style.setProperty("--pc1", green ? "#203731" : t.c1);
+    p.style.setProperty("--pc2", green ? "#FFB612" : t.c2);
+    const tag = p.querySelector(".tag");
+    if (k >= 0){ tag.hidden = false; tag.textContent = String(t.stars[k][0]).slice(0,14); }
+    else tag.hidden = true;
+    let num = p.dataset.num ? +p.dataset.num : null;
+    if (k >= 0) num = t.stars[k][1];
+    else if (num === null || used.has(num)) { do { num = Math.floor(Math.random()*99)+1; } while (used.has(num)); }
+    used.add(num); p.dataset.num = num;
+    p.querySelector(".n").textContent = green ? "G" : num;
+  });
+}
+
+// ---------- teams ----------
+const ALL = TEAMS.map(([city,name,c1,c2,stars]) => ({label:`${city} ${name}`, short:name, city, c1, c2, stars, slug:slug(name)}));
+const BY = Object.fromEntries(ALL.map(t=>[t.slug,t]));
+let team = null, state = "idle", runs = 0, sleepStreak = 0, forceSleep = false, lastSleepy = false, lastPayoff = "", busy = false;
+let count = +(localStorage.getItem("p123") || 0);
+$("#count").textContent = count;
+
+const strip = $("#strip");
+ALL.forEach(t=>{
+  const c = document.createElement("button"); c.className = "chip"; c.textContent = t.short; c.dataset.slug = t.slug;
+  c.style.setProperty("--a", t.c1); c.style.setProperty("--b", t.c2);
+  c.onclick = () => { if (busy) return; sfx("ding"); pick(t); };
+  strip.appendChild(c);
+});
+const oc = document.createElement("button"); oc.className = "chip other"; oc.textContent = "Other…";
+oc.onclick = () => { if (busy) return; $("#sheet").hidden = false; setTimeout(()=>$("#custom2").focus(), 50); };
+strip.appendChild(oc);
+
+const grid = $("#teams");
+ALL.forEach(t=>{
+  const b = document.createElement("button"); b.className = "t";
+  b.style.setProperty("--a", t.c1); b.style.setProperty("--b", t.c2);
+  const sm = document.createElement("small"); sm.textContent = t.city; b.appendChild(sm); b.appendChild(document.createTextNode(t.short));
+  b.onclick = () => { if (busy) return; pick(t); window.scrollTo({top:0, behavior: reduce ? "auto" : "smooth"}); };
+  grid.appendChild(b);
+});
+
+function teamPep(t){ if (t.custom) return `${t.short}? Love it. Great name. Huddle up.`; return TEAMPEP[t.slug] || `${t.city}! Great city. I think I've been here. Huddle up.`; }
+function teamPayoff(t){
+  if (t.custom) return rnd([`${t.short} fans: the coach heard your whole history and had one reaction.`, `${t.short}? Great. Wonderful. Fantastic. Anyway.`]);
+  return PAYOFF[t.slug] || "The coach only knows one chant.";
+}
+
+function pick(t, opts){
+  opts = opts || {};
+  team = t;
+  document.documentElement.style.setProperty("--c1", t.c1);
+  document.documentElement.style.setProperty("--c2", t.c2);
+  $("#bandText").textContent = `THE ${t.short.toUpperCase()} HUDDLE`;
+  document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("sel", c.dataset.slug === t.slug));
+  const sel = strip.querySelector(".chip.sel");
+  if (sel) { try { sel.scrollIntoView({inline:"center", block:"nearest", behavior: opts.instant || reduce ? "auto" : "smooth"}); } catch(e){} }
+  field.classList.remove("broke");
+  dress(t, false);
+  if (opts.offscreen) offscreen(); else formation(1);
+  mood = ""; setMood("neutral");
+  call.className = "call"; hideBubble();
+  payoffBox.classList.remove("hot");
+  payoffP.textContent = t.custom ? `${t.short}. Bold choice. Tap the button and let the coach cook.` : `${t.city} ${t.short}. Tap the button. Your stars are ready.`;
+  setState("idle");
+  if (!opts.keepUrl) { try { history.replaceState(null, "", t.custom ? "/?team=" + encodeURIComponent(t.short) : "/" + t.slug + "/"); } catch(e){} }
+  if (t.slug === "packers" && !t.custom) dress(t, false);
+}
+
+function customTeam(v){
+  v = String(v).trim().slice(0, 32); if (!v) return null;
+  const s = slug(v);
+  if (BY[s]) return BY[s];
+  const hue = [...v].reduce((a,c)=>a+c.charCodeAt(0),0) % 360;
+  return {label:v, short:v, city:"", c1:`hsl(${hue} 62% 32%)`, c2:"#ffffff", custom:true, slug:"custom",
+          stars:[["Your QB",12],["Your guy",88],["That one kid",3]]};
+}
+const EGGS = { cheese:"The coach just got a very long email from Wisconsin.", rodgers:"He said it on TV. We drew a cartoon. Fair trade.",
+  mccarthy:"The coach on this page is a cartoon. The real one had not responded.", lambeau:"The coach felt that one in his visor." };
+function submitCustom(input){
+  const raw = input.value.trim(); if (!raw) return;
+  const low = raw.toLowerCase();
+  input.value = ""; input.blur(); $("#sheet").hidden = true;
+  if (low === "zzz" || low === "snore" || low === "sleep") { forceSleep = true; pick(team || BY.steelers); toast("Coach is getting drowsy…"); return; }
+  if (EGGS[low]) { pick(customTeam(raw)); toast(EGGS[low]); return; }
+  if (low === "packers" || low === "green bay") { pick(BY.packers); toast("You typed Packers. The coach already knew."); return; }
+  const t = customTeam(raw); pick(t);
+  window.scrollTo({top:0, behavior: reduce ? "auto" : "smooth"});
+}
+$("#customGo").onclick = () => submitCustom($("#custom"));
+$("#customGo2").onclick = () => submitCustom($("#custom2"));
+$("#custom").addEventListener("keydown", e=>{ if (e.key === "Enter") submitCustom($("#custom")); });
+$("#custom2").addEventListener("keydown", e=>{ if (e.key === "Enter") submitCustom($("#custom2")); });
+$("#sheet").addEventListener("click", e=>{ if (e.target.id === "sheet") $("#sheet").hidden = true; });
+
+// ---------- chyron ----------
+let chyI = 0, chyHold = 0;
+function chyron(text, holdMs){
+  chy.style.opacity = 0;
+  setTimeout(()=>{ chy.textContent = text; chy.style.opacity = 1; }, 220);
+  chyHold = Date.now() + (holdMs || 0);
+}
+setInterval(()=>{ if (Date.now() < chyHold) return; chyI = (chyI+1) % CHY.length; chyron(CHY[chyI]); }, 4200);
+
+// ---------- bubble ----------
+let typeTok = 0;
+async function say(text, opts){
+  opts = opts || {};
+  const tok = ++typeTok;
+  bubble.className = "bubble on" + (opts.zzz ? " zzz" : "");
+  if (reduce || opts.instant) { bubble.textContent = text; return; }
+  bubble.textContent = "";
+  for (let i=1;i<=text.length;i++){ if (tok !== typeTok) return; bubble.textContent = text.slice(0,i); await wait(text[i-1] === " " ? 18 : 24); }
+}
+function hideBubble(){ typeTok++; bubble.className = "bubble"; }
+let pepBag = [];
+function nextPep(){ if (!pepBag.length) pepBag = PEP.slice().sort(()=>Math.random()-.5); return pepBag.pop(); }
+
+// ---------- state / buttons ----------
+function setState(s){
+  state = s;
+  go.classList.remove("red","pulse"); go.disabled = false; sec.hidden = true;
+  if (s === "idle"){ go.textContent = "Get ready to huddle"; go.classList.add("pulse"); }
+  else if (s === "forming"){ go.textContent = "Huddle forming…"; go.disabled = true; }
+  else if (s === "asleep"){ go.textContent = "📣 Blow the whistle"; go.classList.add("red","pulse"); }
+  else if (s === "ready"){ go.textContent = BREAK_LABELS[Math.min(runs, BREAK_LABELS.length-1)]; go.classList.add("red","pulse"); }
+  else if (s === "counting"){ go.textContent = "…"; go.disabled = true; }
+  else if (s === "done"){ go.textContent = "📲 Share this"; sec.hidden = false; sec.textContent = "Again"; }
+}
+
+// ---------- sleep gag ----------
+let snoreStop = null, sleepTimer = null, wakeResolve = null, coachTaps = 0, coachTapT = 0;
+function sleepChance(){
+  if (forceSleep) return 1;
+  if (sleepStreak >= 3) return 0;
+  return runs === 0 ? 0.4 : runs < 5 ? 0.45 : 0.5;
+}
+function sleepSeq(){
+  return new Promise(res=>{
+    wakeResolve = res;
+    setState("asleep");
+    setMood("asleep");
+    snoreStop = sfx("snore") || null;
+    say("ZZZ… 1-2-3-PACK… ZZZ", {zzz:true});
+    chyron(sleepStreak >= 3 ? "A SMALL BLANKET HAS BEEN PLACED ON THE COACH. THIS IS FINE." : sleepStreak === 2 ? "THE BOYS HAVE STARTED A GAME OF CARDS." : "THE COACH HAS DOZED OFF (CARTOON). THE HUDDLE IS WAITING.", 6000);
+    payoffBox.classList.add("hot");
+    payoffP.innerHTML = "";
+    const b = document.createElement("span"); b.textContent = "Tap the coach or blow the whistle!";
+    const sm = document.createElement("small"); sm.textContent = "Rodgers says McCarthy snored in a QB meeting (his claim). This coach is a cartoon.";
+    payoffP.appendChild(b); payoffP.appendChild(sm);
+    clearTimeout(sleepTimer);
+    sleepTimer = setTimeout(()=>autoPoke(), 4200);
+  });
+}
+async function autoPoke(){
+  if (state !== "asleep") return;
+  const p = players[STAR_SLOTS[2]], ox = p.style.left, oy = p.style.top;
+  p.classList.add("poke"); p.style.left = "58%"; p.style.top = "66%";
+  await wait(380); sfx("boing"); coach.classList.remove("jump"); void coach.offsetWidth; coach.classList.add("jump");
+  say(rnd(POKE), {zzz:true, instant:true});
+  await wait(500); p.style.left = ox; p.style.top = oy; await wait(400); p.classList.remove("poke");
+  if (state === "asleep") wake();
+}
+function wake(){
+  if (state !== "asleep") return;
+  clearTimeout(sleepTimer);
+  try { snoreStop && snoreStop(); } catch(e){}
+  snoreStop = null;
+  sfx("whistle");
+  setMood("neutral");
+  coach.classList.remove("jump"); void coach.offsetWidth; coach.classList.add("jump");
+  payoffBox.classList.remove("hot");
+  payoffP.textContent = rnd(WAKE);
+  say("!!! *yawn* Alright team… where was I. Oh right. Huddle.");
+  const r = wakeResolve; wakeResolve = null; setTimeout(()=>r && r(), 1500);
+}
+coach.addEventListener("click", ()=>{
+  const now = Date.now(); coachTaps = now - coachTapT < 600 ? coachTaps + 1 : 1; coachTapT = now;
+  if (coachTaps >= 5){ coachTaps = 0; coach.classList.remove("spin"); void coach.offsetWidth; coach.classList.add("spin"); sfx("boing"); toast("The coach did a full 720. Nobody asked."); return; }
+  if (state === "asleep"){
+    sfx("boing"); say(rnd(POKE), {zzz:true, instant:true});
+    coach.classList.remove("jump"); void coach.offsetWidth; coach.classList.add("jump");
+    clearTimeout(sleepTimer); sleepTimer = setTimeout(()=>autoPoke(), 2600);
+    if (coachTaps >= 3) wake();
+  } else if (state === "idle" || state === "done") {
+    sfx("boing"); coach.classList.remove("jump"); void coach.offsetWidth; coach.classList.add("jump");
+  }
+});
+
+// ---------- the huddle ----------
+async function huddleUp(){
+  if (!team || busy) return;
+  busy = true; setState("forming");
+  field.classList.remove("broke"); call.className = "call";
+  dress(team, false); setMood("pep");
+  sfx("whistle"); sfx("clip", "bringitin"); sfx("murmur", true); buzz(15);
+  formation(.66);
+  payoffP.textContent = `${team.label}, bring it in!`;
+  payoffBox.classList.remove("hot");
+  const line = (Math.random() < .4 || runs === 0) ? teamPep(team) : nextPep();
+  await say(line);
+  await wait(650);
+  const sleepy = Math.random() < sleepChance();
+  forceSleep = false;
+  lastSleepy = sleepy;
+  if (sleepy){ sleepStreak++; busy = false; await sleepSeq(); busy = true; }
+  else sleepStreak = 0;
+  setMood("neutral");
+  say("Hands in. On three…");
+  payoffP.textContent = "Hands in. The whole team is waiting on you.";
+  busy = false;
+  setState("ready");
+}
+
+async function breakIt(){
+  if (busy || state !== "ready") return;
+  busy = true; setState("counting");
+  hideBubble(); sfx("murmur", false);
+  const steps = [["1", .6], ["2", .56], ["3", .52]];
+  for (const [n, k] of steps){
+    sfx("beep", +n); buzz(20);
+    call.className = "call"; call.textContent = n; void call.offsetWidth; call.classList.add("show");
+    formation(k);
+    await wait(430);
+  }
+  // SLAM
+  sfx("packers"); buzz([40, 30, 140]);
+  setMood("yell"); coach.classList.add("yell");
+  call.className = "call packers"; call.textContent = "PACKERS!"; void call.offsetWidth; call.classList.add("show");
+  const fl = $("#flash"); fl.classList.remove("go"); void fl.offsetWidth; fl.classList.add("go");
+  if (!reduce){ field.classList.remove("shake"); void field.offsetWidth; field.classList.add("shake"); }
+  field.classList.add("broke");
+  players.forEach((p,i)=>setTimeout(()=>{ p.classList.remove("flip"); void p.offsetWidth; p.classList.add("flip"); dressOne(p, i); }, i*35));
+  confetti();
+  await wait(260);
+  scatter();
+  runs++; count++; localStorage.setItem("p123", count); $("#count").textContent = count;
+  lastPayoff = lastSleepy ? "The coach fell asleep mid-huddle, woke up, and still said it." : teamPayoff(team);
+  payoffBox.classList.remove("hot");
+  payoffP.textContent = lastPayoff;
+  if (team.slug === "packers") chyron("BREAKING: COACH SAYS THE RIGHT TEAM FOR ONCE", 6000);
+  else if (team.slug === "vikings") chyron("TWO McCARTHYS. ONE CHANT. (NOT RELATED. PROBABLY.)", 6000);
+  else if (ESC[count]) chyron(ESC[count], 6000);
+  else if (team.slug === "steelers") chyron("HALFTIME, 19-16 EAGLES. RODGERS SAYS THIS HAPPENED.", 6000);
+  await wait(900);
+  coach.classList.remove("yell"); setMood("neutral");
+  busy = false;
+  setState("done");
+}
+function dressOne(p, i){ p.style.setProperty("--pc1", "#203731"); p.style.setProperty("--pc2", "#FFB612"); p.querySelector(".n").textContent = "G"; }
+
+call.addEventListener("click", ()=>{
+  if (!call.classList.contains("packers")) return;
+  call.classList.remove("wob"); void call.offsetWidth; call.classList.add("wob"); sfx("pop");
+  const r = call.getBoundingClientRect(); cheeseBurst(r.left + r.width/2, r.top + r.height/2, 8);
+});
+field.addEventListener("click", e=>{ if (state === "done" && e.target === field) { sfx("pop"); cheeseBurst(e.clientX, e.clientY, 10); } });
+
+// ---------- share ----------
+function shareUrl(){ return team.custom ? `https://1-2-3-packers.com/?team=${encodeURIComponent(team.short)}` : `https://1-2-3-packers.com/${team.slug}/`; }
+function shareText(){
+  if (lastSleepy) return `The coach fell asleep in my ${team.short} huddle. Then he yelled PACKERS. (parody)`;
+  if (team.slug === "steelers") return `My Steelers huddle just broke. Guess what the coach yelled. 🧀 (parody)`;
+  if (team.slug === "packers") return `I picked the Packers. The coach did the chant. The one time it makes sense. 🧀`;
+  return rnd([`My ${team.short} huddle just broke. Guess what the coach yelled. 🧀`, `${team.short} halftime adjustments: 1-2-3 PACKERS! 🧀`, `Send this to a ${team.short} fan who will be mad. 🧀`, `Try your team. I dare you. 🧀`]);
+}
+function doShare(){
+  const o = { teamLabel: team.label, short: team.short, slug: team.slug, c1: team.c1, c2: team.c2, stars: team.stars,
+    payoff: lastPayoff, sleepy: lastSleepy, url: shareUrl(), text: shareText(), coachSvg: coachSVG("yell", team.c1) };
+  if (window.Share && Share.open) { try { Share.open(o); return; } catch(e){} }
+  if (navigator.share) { navigator.share({ text: o.text, url: o.url }).catch(()=>{}); return; }
+  try { navigator.clipboard.writeText(o.text + " " + o.url); toast("Link copied. Go ruin someone's day."); } catch(e){ toast(o.url); }
+}
+
+// ---------- buttons ----------
+go.addEventListener("click", ()=>{
+  try { S.unlock && S.unlock(); S.preload && S.preload(); } catch(e){}
+  if (state === "idle") huddleUp();
+  else if (state === "asleep") wake();
+  else if (state === "ready") breakIt();
+  else if (state === "done") doShare();
+});
+sec.addEventListener("click", async ()=>{
+  try { S.unlock && S.unlock(); } catch(e){}
+  if (busy) return;
+  const others = ALL.filter(t => !team || t.slug !== team.slug);
+  pick(rnd(others), {offscreen:true});
+  await wait(60);
+  huddleUp();
+});
+const muteBtn = $("#mute");
+function paintMute(){ muteBtn.textContent = S.muted ? "🔇" : "🔊"; }
+muteBtn.addEventListener("click", ()=>{ try { S.unlock && S.unlock(); S.toggleMute && S.toggleMute(); } catch(e){} paintMute(); toast(S.muted ? "Sound off" : "Sound on 🔊 (works on silent mode too)"); });
+paintMute();
+
+// ---------- confetti + cheese ----------
+const fx = $("#fx"), cx = fx.getContext("2d");
+let parts = [], raf = 0, DPR = Math.min(2, window.devicePixelRatio || 1);
+function sizeFx(){ fx.width = innerWidth*DPR; fx.height = innerHeight*DPR; cx.setTransform(DPR,0,0,DPR,0,0); }
+sizeFx(); addEventListener("resize", sizeFx);
+const COLS = ["#203731", "#FFB612", "#ffffff", "#2e6b48", "#ffd55a"];
+function addPart(x, y, cheese, vx, vy){
+  parts.push({x, y, vx, vy, r: Math.random()*6.28, vr:(Math.random()-.5)*8, cheese, s: cheese ? (Math.random()<.25 ? 34 : 20) : 7+Math.random()*6,
+    c: rnd(COLS), life: 0});
+}
+function confetti(){
+  const n = reduce ? 40 : ((navigator.hardwareConcurrency||8) <= 4 ? 70 : 120);
+  for (let i=0;i<n;i++){ const cheese = i % 5 === 0; addPart(Math.random()*innerWidth, -20 - Math.random()*innerHeight*.5, cheese, (Math.random()-.5)*120, 60+Math.random()*160); }
+  const r = field.getBoundingClientRect();
+  for (let i=0;i<24;i++){ const a = Math.random()*Math.PI*2, sp = 250+Math.random()*350; addPart(r.left+r.width/2, r.top+r.height*.47, i%3===0, Math.cos(a)*sp, Math.sin(a)*sp-200); }
+  if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); }
+}
+function cheeseBurst(x, y, n){ for (let i=0;i<n;i++){ const a = -Math.PI/2 + (Math.random()-.5)*2.2, sp = 260+Math.random()*260; addPart(x, y, true, Math.cos(a)*sp, Math.sin(a)*sp); } if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); } }
+function drawCheese(s){
+  cx.fillStyle = "#FFC62B"; cx.strokeStyle = "#b37f00"; cx.lineWidth = 2;
+  cx.beginPath(); cx.moveTo(-s/2, s/3); cx.lineTo(s/2, s/3); cx.lineTo(s/2, -s/6); cx.closePath(); cx.fill(); cx.stroke();
+  cx.fillStyle = "#e0a100";
+  [[.18,.12,.09],[.33,.22,.06],[.05,.24,.05]].forEach(([a,b,r])=>{ cx.beginPath(); cx.arc(s*a, s*b, s*r, 0, 6.28); cx.fill(); });
+}
+let last = 0;
+function tick(t){
+  const dt = Math.min(.033, (t-last)/1000); last = t;
+  cx.clearRect(0,0,innerWidth,innerHeight);
+  parts = parts.filter(p => p.y < innerHeight + 60 && p.life < 6);
+  for (const p of parts){
+    p.life += dt; p.vy = Math.min(380, p.vy + 520*dt); p.vx *= .99; p.x += p.vx*dt; p.y += p.vy*dt; p.r += p.vr*dt;
+    cx.save(); cx.translate(p.x, p.y); cx.rotate(p.r);
+    if (p.cheese) drawCheese(p.s); else { cx.fillStyle = p.c; cx.fillRect(-p.s/2, -p.s/4, p.s, p.s/2); }
+    cx.restore();
+  }
+  if (parts.length) raf = requestAnimationFrame(tick); else { raf = 0; cx.clearRect(0,0,innerWidth,innerHeight); }
+}
+
+// ---------- start ----------
+fit();
+const params = new URLSearchParams(location.search);
+const q = params.get("team");
+let start = null;
+if (window.PRESET_TEAM && BY[window.PRESET_TEAM]) start = BY[window.PRESET_TEAM];
+else if (q) {
+  if (BY[slug(q)]) { if (!window.PRESET_TEAM && location.pathname === "/" ) { try { location.replace("/" + slug(q) + "/"); } catch(e){} } start = BY[slug(q)]; }
+  else start = customTeam(q);
+}
+pick(start || BY.steelers, {instant:true, keepUrl:true});
+requestAnimationFrame(fit);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+setTimeout(()=>{ if (state === "idle") say(runs === 0 ? "Bring it in, boys! Big halftime speech coming up." : nextPep()); }, 700);
+})();
+</script>
+</body>
+</html>
