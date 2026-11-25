@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Pick the voice</title>
+<style>
+  body{margin:0;min-height:100dvh;background:#1b4d2b;color:#fff;font:600 18px/1.35 -apple-system,system-ui,sans-serif;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;box-sizing:border-box;text-align:center}
+  h1{margin:0 0 6px;color:#FFC62F;font-size:28px}
+  button{width:min(420px,100%);padding:16px;border:3px solid #FFC62F;border-radius:16px;background:#0f3a1f;color:#fff;
+    font:inherit;cursor:pointer;display:flex;align-items:center;gap:14px;text-align:left}
+  button b{flex:0 0 auto;width:44px;height:44px;border-radius:50%;background:#FFC62F;color:#0f3a1f;display:grid;place-items:center;font-size:22px}
+  button.on{background:#FFC62F;color:#0f3a1f}
+  button.on b{background:#0f3a1f;color:#FFC62F}
+</style>
+</head>
+<body>
+<h1>1-2-3 PACKERS!</h1>
+<button data-v="fenrir"><b>1</b><span>Fenrir (live now)</span></button>
+<button data-v="algenib"><b>2</b><span>Algenib</span></button>
+<button data-v="orus"><b>3</b><span>Orus</span></button>
+<button data-v="puck"><b>4</b><span>Puck</span></button>
+<script>
+  const audios = {};
+  document.querySelectorAll("button").forEach(b => {
+    const v = b.dataset.v, a = new Audio(v + ".mp3?v=2"); a.preload = "auto"; audios[v] = a;
+    b.addEventListener("click", () => {
+      Object.values(audios).forEach(x => { x.pause(); x.currentTime = 0; });
+      document.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
+      a.play().catch(() => {});
+      a.onended = () => b.classList.remove("on");
+    });
+  });
+</script>
+</body>
+</html>

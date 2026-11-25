@@ -65,8 +65,8 @@
   function preload() {
     try {
       if (!ctx || loading) return; loading = true;
-      [].forEach(function (k) { // voice off (Levi 11/25: Mac voices sound robotic); list real recordings here
-        fetch('/audio/' + k + '.mp3?v=4').then(function (r) { return r.arrayBuffer(); }).then(function (ab) {
+      ['one', 'two', 'three', 'packers'].forEach(function (k) { // Google Chirp 3 HD voice (tools/chirp.py)
+        fetch('/audio/' + k + '.mp3?v=5').then(function (r) { return r.arrayBuffer(); }).then(function (ab) {
           return new Promise(function (ok, no) { var p = ctx.decodeAudioData(ab, ok, no); if (p && p.then) p.then(ok, no); });
         }).then(function (b) { bufs[k] = b; }).catch(function () { loading = false; });
       });
