@@ -65,7 +65,7 @@
   function preload() {
     try {
       if (!ctx || loading) return; loading = true;
-      ['one', 'two', 'three', 'packers'].forEach(function (k) { // Google Chirp 3 HD voice (tools/chirp.py)
+      [].forEach(function (k) { // voice removed (Levi 11/25); clips stay in /audio, list them here to bring it back
         fetch('/audio/' + k + '.mp3?v=5').then(function (r) { return r.arrayBuffer(); }).then(function (ab) {
           return new Promise(function (ok, no) { var p = ctx.decodeAudioData(ab, ok, no); if (p && p.then) p.then(ok, no); });
         }).then(function (b) { bufs[k] = b; }).catch(function () { loading = false; });
