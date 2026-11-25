@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>1-2-3 PACKERS! · Pick your team. Huddle up. Break it.</title>
+<meta name="description" content="Pick any team. Huddle up with your stars. Break the huddle. It will say Packers. It always says Packers.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://1-2-3-packers.com/">
+<meta property="og:title" content="Pick your team. Huddle up. 1-2-3… PACKERS!">
+<meta property="og:description" content="Any team. Any huddle. Coach only knows one chant.">
+<meta property="og:image" content="https://1-2-3-packers.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pick your team. Huddle up. 1-2-3… PACKERS!">
+<meta name="twitter:description" content="Any team. Any huddle. Coach only knows one chant.">
+<meta name="twitter:image" content="https://1-2-3-packers.com/og.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧀</text></svg>">
+<style>
+  :root{ --grass:#1f6b35; --grass2:#195c2d; --gold:#ffb612; --green:#203731; --team:#444; --team2:#ccc; }
+  *{box-sizing:border-box} [hidden]{display:none!important}
+  html,body{margin:0;min-height:100%}
+  body{
+    font-family:"Arial Black","Helvetica Neue",Impact,system-ui,sans-serif;color:#fff;
+    background:repeating-linear-gradient(0deg,var(--grass) 0 60px,var(--grass2) 60px 120px);overflow-x:hidden;
+  }
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;
+    background:repeating-linear-gradient(0deg,transparent 0 119px,rgba(255,255,255,.35) 119px 121px)}
+  main{position:relative;max-width:960px;margin:0 auto;padding:20px 14px 48px;text-align:center}
+  h1{font-size:clamp(34px,8vw,72px);margin:6px 0 4px;letter-spacing:-1px;text-shadow:0 4px 0 rgba(0,0,0,.35);line-height:1}
+  h1 .g{color:var(--gold)}
+  .sub{font-family:system-ui,sans-serif;font-weight:800;font-size:clamp(15px,3.6vw,20px);margin:0 0 14px}
+  .steps{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;font-family:system-ui;font-weight:800;font-size:13px;margin-bottom:10px}
+  .steps span{padding:5px 10px;border-radius:999px;background:rgba(0,0,0,.3);opacity:.6}
+  .steps span.on{background:var(--gold);color:var(--green);opacity:1}
+
+  .stage{position:relative;margin:0 auto 10px;width:min(540px,100%);aspect-ratio:1/1;max-height:62vh}
+  .p{
+    position:absolute;width:12%;aspect-ratio:1/1;border-radius:50%;
+    background:var(--team);border:4px solid var(--team2);color:var(--team2);
+    left:50%;top:50%;transform:translate(-50%,-50%);
+    display:grid;place-items:center;font-size:clamp(12px,2.8vw,18px);
+    box-shadow:0 6px 0 rgba(0,0,0,.3);z-index:1;
+    transition:left .8s cubic-bezier(.3,1.3,.5,1),top .8s cubic-bezier(.3,1.3,.5,1),background .25s,border-color .25s,color .25s;
+  }
+  .p .tag{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:4px;white-space:nowrap;
+    font:900 clamp(10px,2.4vw,13px) system-ui;background:#000;color:#fff;padding:2px 7px;border-radius:6px;opacity:0;transition:opacity .3s}
+  .p.star .tag{opacity:1}
+  .stage.broke .p .tag{background:var(--gold);color:var(--green)}
+
+  .coach{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34%;z-index:2;
+    filter:drop-shadow(0 6px 0 rgba(0,0,0,.3));transition:transform .15s}
+  .coach .nameplate{font:900 clamp(10px,2.4vw,13px) system-ui;background:#fff;color:#111;border-radius:6px;padding:2px 6px;display:inline-block;margin-top:-4px}
+  .coach svg{width:100%;display:block}
+  .coach .m-yell,.coach .e-shut,.coach .zz{display:none}
+  .coach.yell .m-yell{display:inline}.coach.yell .m-flat{display:none}
+  .coach.sleep .e-open{display:none}.coach.sleep .e-shut{display:inline}.coach.sleep .zz{display:inline}
+  .coach.yell{transform:translate(-50%,-50%) scale(1.15)}
+  .zz{animation:zz 1.4s ease-in-out infinite}
+  @keyframes zz{0%{opacity:0;transform:translate(0,0)}30%{opacity:1}100%{opacity:0;transform:translate(14px,-22px)}}
+
+  .call{position:absolute;left:50%;top:14%;transform:translate(-50%,-50%) scale(.6);font-size:clamp(40px,13vw,110px);
+    white-space:nowrap;z-index:5;opacity:0;text-shadow:0 5px 0 rgba(0,0,0,.5),0 0 30px rgba(0,0,0,.4);pointer-events:none}
+  .call.small{font-size:clamp(20px,5.5vw,40px)}
+  .call.show{opacity:1;transform:translate(-50%,-50%) scale(1);transition:transform .18s cubic-bezier(.3,1.8,.5,1),opacity .1s}
+  .call.packers{color:var(--gold);top:50%;font-size:clamp(52px,16vw,150px);-webkit-text-stroke:3px var(--green)}
+  .shake{animation:shake .5s}
+  @keyframes shake{0%,100%{transform:none}20%{transform:translate(-10px,4px) rotate(-2deg)}40%{transform:translate(9px,-5px) rotate(2deg)}60%{transform:translate(-6px,3px)}80%{transform:translate(4px,-2px)}}
+
+  .picked{font-family:system-ui,sans-serif;font-weight:900;font-size:19px;min-height:26px;margin:4px 0 8px}
+  .verdict{font-family:system-ui,sans-serif;font-weight:800;font-size:17px;min-height:24px;margin:8px auto 12px;max-width:560px;opacity:0;transition:opacity .4s}
+  .verdict.on{opacity:1}
+  .btn{font:inherit;font-size:clamp(20px,5vw,28px);border:0;border-radius:14px;cursor:pointer;background:var(--gold);
+    color:var(--green);padding:14px 26px;box-shadow:0 6px 0 #b37f00;text-transform:uppercase;letter-spacing:.5px}
+  .btn:active{transform:translateY(4px);box-shadow:0 2px 0 #b37f00}
+  .btn:disabled{opacity:.5;cursor:default}
+  .btn.pulse{animation:pulse 1s infinite}
+  @keyframes pulse{50%{transform:scale(1.06)}}
+  .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+  .ghost{font-family:system-ui,sans-serif;font-weight:800;font-size:15px;border-radius:999px;border:2px solid #fff;
+    background:rgba(0,0,0,.25);color:#fff;padding:9px 16px;cursor:pointer;text-decoration:none}
+  h2{font-size:22px;margin:26px 0 12px;text-shadow:0 3px 0 rgba(0,0,0,.3)}
+  .teams{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+  .t{font-family:system-ui,sans-serif;font-weight:800;font-size:14px;line-height:1.15;border-radius:10px;padding:10px 8px;cursor:pointer;
+    border:3px solid var(--c2);background:var(--c1);color:var(--c2);min-height:54px;box-shadow:0 4px 0 rgba(0,0,0,.35)}
+  .t small{display:block;font-weight:600;opacity:.85;font-size:12px}
+  .t.sel{outline:4px solid #fff;outline-offset:2px}
+  .other{display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+  .other input{font:700 16px system-ui,sans-serif;padding:10px 14px;border-radius:10px;border:0;width:min(320px,70vw)}
+  .stat{font-family:system-ui,sans-serif;font-weight:800;margin-top:26px}
+  .stat b{color:var(--gold);font-size:22px}
+  footer{font-family:system-ui,sans-serif;font-size:12px;opacity:.85;margin-top:28px;line-height:1.5}
+  footer a{color:#fff}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#000;color:#fff;font:700 15px system-ui;
+    padding:10px 16px;border-radius:999px;opacity:0;transition:opacity .2s;z-index:9}
+  .toast.on{opacity:.9}
+</style>
+</head>
+<body>
+<main>
+  <h1>1-2-3 <span class="g">PACKERS!</span></h1>
+  <p class="sub">Pick your team. Huddle up with your stars. Break it.</p>
+  <div class="steps"><span id="s1" class="on">1 · Pick a team</span><span id="s2">2 · Huddle up</span><span id="s3">3 · Break it</span></div>
+
+  <p class="picked" id="picked">Pick your team below 👇</p>
+
+  <div class="stage" id="stage">
+    <div id="ring"></div>
+    <div class="coach" id="coach">
+      <svg viewBox="0 0 200 210" aria-label="Cartoon coach">
+        <!-- headset band -->
+        <path d="M38 98 Q100 8 162 98" fill="none" stroke="#222" stroke-width="10"/>
+        <!-- face -->
+        <ellipse cx="100" cy="112" rx="64" ry="72" fill="#f2b38f" stroke="#7a4a33" stroke-width="4"/>
+        <!-- ears / headset cups -->
+        <rect x="24" y="92" width="24" height="40" rx="10" fill="#222"/>
+        <rect x="152" y="92" width="24" height="40" rx="10" fill="#222"/>
+        <!-- mic -->
+        <path d="M40 128 Q48 172 88 170" fill="none" stroke="#222" stroke-width="5"/>
+        <circle cx="90" cy="170" r="7" fill="#222"/>
+        <!-- visor -->
+        <path d="M34 72 Q100 38 166 72 L170 84 Q100 62 30 84 Z" fill="#111"/>
+        <path d="M30 84 Q100 62 170 84 Q100 108 30 84 Z" fill="var(--visor,#111)" stroke="#000" stroke-width="2"/>
+        <!-- brows -->
+        <path d="M62 98 L88 94" stroke="#5a3a28" stroke-width="6" stroke-linecap="round"/>
+        <path d="M112 94 L138 98" stroke="#5a3a28" stroke-width="6" stroke-linecap="round"/>
+        <!-- eyes -->
+        <g class="e-open"><circle cx="76" cy="112" r="7" fill="#222"/><circle cx="124" cy="112" r="7" fill="#222"/></g>
+        <g class="e-shut"><path d="M66 113 Q76 120 86 113" stroke="#222" stroke-width="5" fill="none"/><path d="M114 113 Q124 120 134 113" stroke="#222" stroke-width="5" fill="none"/></g>
+        <!-- nose & cheeks -->
+        <ellipse cx="100" cy="132" rx="11" ry="9" fill="#e59a76"/>
+        <circle cx="62" cy="140" r="10" fill="#f08f7a" opacity=".55"/><circle cx="138" cy="140" r="10" fill="#f08f7a" opacity=".55"/>
+        <!-- mouths -->
+        <path class="m-flat" d="M80 158 Q100 166 120 158" stroke="#5a2a1a" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <g class="m-yell"><ellipse cx="100" cy="162" rx="22" ry="17" fill="#5a1414"/><ellipse cx="100" cy="170" rx="13" ry="7" fill="#e86a6a"/></g>
+        <!-- double chin -->
+        <path d="M66 176 Q100 196 134 176" stroke="#7a4a33" stroke-width="3" fill="none" opacity=".6"/>
+        <!-- zzz -->
+        <text class="zz" x="150" y="60" font-family="Arial Black" font-size="28" fill="#fff" stroke="#000" stroke-width="1">Zz</text>
+      </svg>
+      <div class="nameplate" id="nameplate">COACH MIKE</div>
+    </div>
+    <div class="call" id="call"></div>
+  </div>
+
+  <p class="verdict" id="verdict"></p>
+
+  <button class="btn" id="go" disabled>Get ready to huddle</button>
+
+  <div class="row" id="share" hidden>
+    <button class="ghost" id="again">Run it back</button>
+    <a class="ghost" id="tw" target="_blank" rel="noopener">Post it on 𝕏</a>
+    <button class="ghost" id="copy">Share link</button>
+  </div>
+
+  <h2>PICK YOUR TEAM</h2>
+  <div class="teams" id="teams"></div>
+  <div class="other">
+    <input id="custom" maxlength="40" placeholder="Or any team: the Lakers, your kid's soccer team…">
+    <button class="ghost" id="customGo">That one</button>
+  </div>
+
+  <p class="stat">Huddles broken for the Packers on this device: <b id="count">0</b></p>
+
+  <footer>
+    Parody. Cartoon coach is a caricature. Not affiliated with the NFL, any team, coach or player. Player names are for fun and may be out of date.<br>
+    Inspired by what Aaron Rodgers told The Pat McAfee Show on Nov 24, 2026 about a Steelers halftime huddle:
+    <a href="https://sports.yahoo.com/nfl/articles/aaron-rodgers-blast-mccarthy-1-191058565.html" target="_blank" rel="noopener">the story</a>.
+  </footer>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+// [city, name, color1, color2, stars [name, number]]
+const TEAMS = [
+  ["Pittsburgh","Steelers","#101820","#FFB612",[["Rodgers",8],["T.J. Watt",90],["Metcalf",4]]],
+  ["Arizona","Cardinals","#97233F","#FFFFFF",[["Kyler",1],["Harrison Jr.",18],["McBride",85]]],
+  ["Atlanta","Falcons","#A71930","#000000",[["Bijan",7],["London",5],["Penix",9]]],
+  ["Baltimore","Ravens","#241773","#9E7C0C",[["Lamar",8],["Henry",22],["Flowers",4]]],
+  ["Buffalo","Bills","#00338D","#FFFFFF",[["Josh Allen",17],["Cook",4],["Kincaid",86]]],
+  ["Carolina","Panthers","#0085CA","#101820",[["Bryce",9],["McMillan",4],["Hubbard",30]]],
+  ["Chicago","Bears","#0B162A","#C83803",[["Caleb",18],["Odunze",15],["DJ Moore",2]]],
+  ["Cincinnati","Bengals","#FB4F14","#000000",[["Burrow",9],["Ja'Marr",1],["Higgins",5]]],
+  ["Cleveland","Browns","#311D00","#FF3C00",[["Garrett",95],["Shedeur",12],["Jeudy",3]]],
+  ["Dallas","Cowboys","#041E42","#FFFFFF",[["Dak",4],["CeeDee",88],["Pickens",3]]],
+  ["Denver","Broncos","#FB4F14","#002244",[["Bo Nix",10],["Sutton",14],["Surtain",2]]],
+  ["Detroit","Lions","#0076B6","#FFFFFF",[["Goff",16],["St. Brown",14],["Gibbs",26]]],
+  ["Green Bay","Packers","#203731","#FFB612",[["Love",10],["Jacobs",8],["Parsons",1]]],
+  ["Houston","Texans","#03202F","#A71930",[["Stroud",7],["Nico",12],["Anderson",51]]],
+  ["Indianapolis","Colts","#002C5F","#FFFFFF",[["J. Taylor",28],["D. Jones",17],["Pittman",11]]],
+  ["Jacksonville","Jaguars","#006778","#D7A22A",[["Lawrence",16],["Hunter",12],["BTJ",7]]],
+  ["Kansas City","Chiefs","#E31837","#FFB81C",[["Mahomes",15],["Kelce",87],["C. Jones",95]]],
+  ["Las Vegas","Raiders","#000000","#A5ACAF",[["Bowers",89],["Crosby",98],["Geno",7]]],
+  ["Los Angeles","Chargers","#0080C6","#FFC20E",[["Herbert",10],["McConkey",15],["Derwin",3]]],
+  ["Los Angeles","Rams","#003594","#FFD100",[["Stafford",9],["Puka",12],["Davante",17]]],
+  ["Miami","Dolphins","#008E97","#FFFFFF",[["Tua",1],["Waddle",17],["Achane",28]]],
+  ["Minnesota","Vikings","#4F2683","#FFC62F",[["J.J. McCarthy",9],["Jefferson",18],["Addison",3]]],
+  ["New England","Patriots","#002244","#C60C30",[["Maye",10],["Diggs",8],["Henderson",32]]],
+  ["New Orleans","Saints","#101820","#D3BC8D",[["Kamara",41],["Olave",12],["D. Davis",56]]],
+  ["New York","Giants","#0B2265","#FFFFFF",[["Dart",6],["Nabers",1],["Burns",0]]],
+  ["New York","Jets","#125740","#FFFFFF",[["G. Wilson",5],["Breece",20],["Fields",7]]],
+  ["Philadelphia","Eagles","#004C54","#A5ACAF",[["Hurts",1],["Saquon",26],["A.J. Brown",11]]],
+  ["San Francisco","49ers","#AA0000","#B3995D",[["Purdy",13],["CMC",23],["Kittle",85]]],
+  ["Seattle","Seahawks","#002244","#69BE28",[["Darnold",14],["JSN",11],["K. Walker",9]]],
+  ["Tampa Bay","Buccaneers","#D50A0A","#34302B",[["Baker",6],["Evans",13],["Bucky",7]]],
+  ["Tennessee","Titans","#0C2340","#4B92DB",[["Cam Ward",1],["Ridley",0],["Simmons",98]]],
+  ["Washington","Commanders","#5A1414","#FFB612",[["Jayden",5],["McLaurin",17],["Deebo",1]]],
+];
+
+const QUIPS = [
+  "Muscle memory is undefeated.",
+  "Thirteen seasons in Green Bay will do that to a man.",
+  "Coach thinks it's still 2010.",
+  "Nobody had the heart to correct him.",
+  "Offense on one side. Defense on the other. Packers on three.",
+  "He's not wrong. He's just in the wrong building.",
+  "Somewhere in Wisconsin, a cheesehead felt a disturbance.",
+  "Bold halftime adjustment.",
+  "No heads up. Just vibes.",
+  "Your entire roster has been gently converted. Welcome to Lambeau.",
+  "The headset was still tuned to 2010.",
+  "Your stars looked at each other. Nobody said anything.",
+];
+const SLEEPY = "Coach dozed off mid-huddle. Woke up. Still said Packers.";
+const GB = "You picked the Packers. For the first time all week, the huddle was correct. 🧀";
+const STEELERS = "You picked the Steelers. Rodgers is in the huddle and already knows how this ends.";
+const VIKINGS = "Two McCarthys in one huddle. Still Packers.";
+
+const $ = s => document.querySelector(s);
+const ring = $("#ring"), call = $("#call"), stage = $("#stage"), coach = $("#coach"), go = $("#go");
+let team = null, busy = false, phase = "pick", runs = 0;
+let count = +localStorage.getItem("p123") || 0;
+$("#count").textContent = count;
+const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+const wait = ms => new Promise(r=>setTimeout(r,ms));
+
+const N = 11, players = [];
+for (let i=0;i<N;i++){ const d=document.createElement("div"); d.className="p"; d.innerHTML='<span class="n"></span><span class="tag"></span>'; ring.appendChild(d); players.push(d); }
+// star slots: top-left, top-right, bottom
+const STAR_SLOTS = [9, 2, 6];
+function spread(r){
+  players.forEach((p,i)=>{ const a=(i/N)*Math.PI*2-Math.PI/2; p.style.left=(50+Math.cos(a)*r)+"%"; p.style.top=(50+Math.sin(a)*r*0.95)+"%"; });
+}
+function scatter(){ players.forEach(p=>{ const side = Math.random()<.5; p.style.left=(side? 4+Math.random()*12 : 84+Math.random()*12)+"%"; p.style.top=(8+Math.random()*84)+"%"; }); }
+function colors(c1,c2){ const r=document.documentElement.style; r.setProperty("--team",c1); r.setProperty("--team2",c2); coach.style.setProperty("--visor",c1); }
+function steps(n){ ["s1","s2","s3"].forEach((id,i)=>$("#"+id).classList.toggle("on", i===n-1)); }
+function dress(t){
+  const nums = new Set(t.stars.map(s=>s[1]));
+  players.forEach((p,i)=>{
+    const k = STAR_SLOTS.indexOf(i);
+    p.classList.toggle("star", k>=0);
+    let num;
+    if (k>=0){ num = t.stars[k][1]; p.querySelector(".tag").textContent = t.stars[k][0]; }
+    else { do { num = Math.floor(Math.random()*99)+1; } while (nums.has(num)); nums.add(num); p.querySelector(".tag").textContent=""; }
+    p.querySelector(".n").textContent = num;
+  });
+}
+scatter();
+
+const grid = $("#teams");
+TEAMS.forEach(([city,name,c1,c2,stars])=>{
+  const b=document.createElement("button");
+  b.className="t"; b.style.setProperty("--c1",c1); b.style.setProperty("--c2",c2);
+  b.innerHTML=`<small>${city}</small>${name}`; b.dataset.slug=slug(name);
+  b.onclick=()=>{ if(busy) return; document.querySelectorAll(".t").forEach(x=>x.classList.remove("sel")); b.classList.add("sel"); pick({label:`${city} ${name}`,short:name,c1,c2,stars}); };
+  grid.appendChild(b);
+});
+
+function pick(t){
+  team=t; phase="pick";
+  colors(t.c1,t.c2); dress(t); scatter();
+  stage.classList.remove("broke"); coach.className="coach";
+  $("#picked").textContent=`Your team: ${t.label}`;
+  $("#verdict").classList.remove("on"); $("#share").hidden=true;
+  call.className="call";
+  go.disabled=false; go.textContent="Get ready to huddle"; go.classList.add("pulse");
+  steps(2);
+  history.replaceState(null,"","?team="+encodeURIComponent(slug(t.short)));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+$("#customGo").onclick=()=>{
+  const v=$("#custom").value.trim(); if(!v||busy) return;
+  const hue=[...v].reduce((a,c)=>a+c.charCodeAt(0),0)%360;
+  document.querySelectorAll(".t").forEach(x=>x.classList.remove("sel"));
+  pick({label:v,short:v,c1:`hsl(${hue} 60% 35%)`,c2:"#ffffff",stars:[["Your QB",12],["Your guy",88],["That one kid",3]]});
+};
+$("#custom").addEventListener("keydown",e=>{ if(e.key==="Enter") $("#customGo").click(); });
+
+function say(text,rate=1.05,pitch=.8){ if(!("speechSynthesis" in window)) return; try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.rate=rate; u.pitch=pitch; speechSynthesis.speak(u);}catch(e){} }
+function flash(text,cls=""){ call.className="call "+cls; call.textContent=text; void call.offsetWidth; call.classList.add("show"); }
+
+async function huddleUp(){
+  busy=true; go.disabled=true; go.classList.remove("pulse");
+  stage.classList.remove("broke"); coach.className="coach";
+  $("#verdict").classList.remove("on"); $("#share").hidden=true;
+  colors(team.c1,team.c2); dress(team); scatter();
+  await wait(120);
+  flash(`${team.short.toUpperCase()}, BRING IT IN!`,"small");
+  say(`${team.short}, bring it in!`,1.05,.8);
+  spread(36);
+  await wait(1100);
+  spread(32);
+  flash("Hands in. On three…","small");
+  phase="ready"; steps(3);
+  go.disabled=false; go.textContent="BREAK THE HUDDLE!"; go.classList.add("pulse");
+  busy=false;
+}
+
+async function breakIt(){
+  busy=true; go.disabled=true; go.classList.remove("pulse");
+  const sleepy = runs>0 && Math.random()<.22; runs++;
+  if (sleepy){
+    call.className="call"; coach.classList.add("sleep"); $("#nameplate").textContent="COACH MIKE (zzz)";
+    await wait(2300);
+    coach.classList.remove("sleep"); $("#nameplate").textContent="COACH MIKE";
+  }
+  for (const [n,w] of [["1","one"],["2","two"],["3","three"]]){
+    say(w,1.15); flash(n); spread(n==="3"?20:26); await wait(560);
+  }
+  say("PACKERS!",1,.6);
+  coach.classList.add("yell");
+  flash("PACKERS!","packers");
+  colors("#203731","#FFB612");
+  stage.classList.add("broke");
+  players.forEach(p=>p.querySelector(".n").textContent="G");
+  spread(44);
+  stage.classList.remove("shake"); void stage.offsetWidth; stage.classList.add("shake");
+  if (navigator.vibrate) navigator.vibrate([60,40,140]);
+  count++; localStorage.setItem("p123",count); $("#count").textContent=count;
+
+  const s=team.short.toLowerCase();
+  const v=$("#verdict");
+  v.textContent = s==="packers"?GB : sleepy?SLEEPY : (s==="steelers"&&runs===1)?STEELERS : (s==="vikings"&&runs===1)?VIKINGS
+    : `You picked the ${team.label}. ${QUIPS[Math.floor(Math.random()*QUIPS.length)]}`;
+  v.classList.add("on");
+
+  const url=location.origin+location.pathname+"?team="+encodeURIComponent(slug(team.short));
+  const text=`I picked the ${team.label}. Huddled up. Broke it. Coach yelled "1-2-3… PACKERS!" 🧀`;
+  $("#tw").href="https://x.com/intent/post?text="+encodeURIComponent(text)+"&url="+encodeURIComponent(url);
+  $("#share").hidden=false;
+  setTimeout(()=>coach.classList.remove("yell"),900);
+  phase="done";
+  go.disabled=false; go.textContent="Huddle up again"; busy=false;
+}
+
+go.onclick=()=>{ if(!team||busy) return; (phase==="ready"?breakIt:huddleUp)(); };
+$("#again").onclick=async()=>{ if(busy) return; await huddleUp(); await wait(500); breakIt(); };
+
+function toast(m){ const t=$("#toast"); t.textContent=m; t.classList.add("on"); setTimeout(()=>t.classList.remove("on"),1600); }
+$("#copy").onclick=async()=>{
+  const url=location.href;
+  if(navigator.share){ try{ await navigator.share({title:"1-2-3 PACKERS!",text:`I picked the ${team.label}. The huddle said Packers.`,url}); return; }catch(e){} }
+  try{ await navigator.clipboard.writeText(url); toast("Link copied"); }catch(e){ toast(url); }
+};
+
+const q=new URLSearchParams(location.search).get("team");
+if(q){
+  const btn=[...document.querySelectorAll(".t")].find(b=>b.dataset.slug===q);
+  if(btn) btn.click();
+  else pick({label:q.replace(/-/g," "),short:q.replace(/-/g," "),c1:"#555",c2:"#fff",stars:[["Your QB",12],["Your guy",88],["That one kid",3]]});
+}
+</script>
+</body>
+</html>
