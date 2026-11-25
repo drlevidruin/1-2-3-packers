@@ -7,18 +7,18 @@
 <!--META-->
 <title>The Colts huddle just broke. Guess who yelled it.</title>
 <meta name="description" content="Tap to break the Colts huddle. 1-2-3 PACKERS! (parody)">
-<link rel="canonical" href="http://1-2-3-packers.com/colts/">
+<link rel="canonical" href="https://www.1-2-3-packers.com/colts/">
 <meta property="og:type" content="website">
-<meta property="og:url" content="http://1-2-3-packers.com/colts/">
+<meta property="og:url" content="https://www.1-2-3-packers.com/colts/">
 <meta property="og:title" content="The Colts huddle just broke. Guess who yelled it.">
 <meta property="og:description" content="Tap to break the huddle. 1-2-3 PACKERS! (parody)">
-<meta property="og:image" content="http://1-2-3-packers.com/og/colts.png">
+<meta property="og:image" content="https://www.1-2-3-packers.com/og/colts.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Colts huddle just broke. Guess who yelled it.">
 <meta name="twitter:description" content="Tap to break the huddle. 1-2-3 PACKERS! (parody)">
-<meta name="twitter:image" content="http://1-2-3-packers.com/og/colts.png">
+<meta name="twitter:image" content="https://www.1-2-3-packers.com/og/colts.png">
 <!--/META--><script>window.PRESET_TEAM="colts"</script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23203731'/><text x='50' y='70' font-size='60' text-anchor='middle' font-family='Arial Black' fill='%23FFB612'>G</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -795,7 +795,7 @@ call.addEventListener("click", ()=>{
 field.addEventListener("click", e=>{ if (state === "done" && e.target === field) { sfx("pop"); cheeseBurst(e.clientX, e.clientY, 10); } });
 
 // ---------- share ----------
-const ORIGIN = /1-2-3-packers\.com$/.test(location.hostname) ? location.protocol + "//1-2-3-packers.com" : "https://1-2-3-packers.com";
+const ORIGIN = "https://www.1-2-3-packers.com";
 function shareUrl(){ return team.custom ? `${ORIGIN}/?team=${encodeURIComponent(team.short)}` : `${ORIGIN}/${team.slug}/`; }
 function shareText(){
   if (lastSleepy) return `The coach fell asleep in my ${team.short} huddle. Then he yelled PACKERS. (parody)`;
