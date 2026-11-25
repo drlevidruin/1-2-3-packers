@@ -84,12 +84,19 @@
     border:3px solid var(--c2);background:var(--c1);color:var(--c2);min-height:54px;box-shadow:0 4px 0 rgba(0,0,0,.35)}
   .t small{display:block;font-weight:600;opacity:.85;font-size:12px}
   .t.sel{outline:4px solid #fff;outline-offset:2px}
-  .other{display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap}
-  .other input{font:700 16px system-ui,sans-serif;padding:10px 14px;border-radius:10px;border:0;width:min(320px,70vw)}
-  .stat{font-family:system-ui,sans-serif;font-weight:800;margin-top:26px}
-  .stat b{color:var(--gold);font-size:22px}
-  footer{font-family:system-ui,sans-serif;font-size:12px;opacity:.85;margin-top:28px;line-height:1.5}
-  footer a{color:#fff}
+  .other{display:flex;gap:8px;margin:16px auto 0;max-width:520px;background:rgba(0,0,0,.28);padding:8px;border-radius:16px}
+  .other input{flex:1;min-width:0;font:700 16px system-ui,sans-serif;padding:12px 14px;border-radius:10px;border:0;color:#111}
+  .other input::placeholder{color:#888}
+  .other .ghost{flex:none;background:var(--gold);color:var(--green);border:0;font-weight:900;border-radius:10px;padding:0 16px}
+  .stat{display:inline-block;font-family:system-ui,sans-serif;font-weight:800;font-size:15px;margin:26px 0 0;
+    background:rgba(0,0,0,.3);padding:8px 16px;border-radius:999px}
+  .stat b{color:var(--gold);font-size:18px}
+  footer{font-family:system-ui,sans-serif;margin:22px auto 0;max-width:520px;background:rgba(0,0,0,.35);border-radius:18px;padding:16px 18px}
+  .credit{display:inline-flex;align-items:center;gap:8px;font:900 16px system-ui,sans-serif;color:#111;background:#fff;
+    text-decoration:none;border-radius:999px;padding:9px 16px;box-shadow:0 4px 0 rgba(0,0,0,.35)}
+  .credit .x{font-size:18px}
+  .fine{font-size:11px;line-height:1.5;opacity:.7;margin:14px 0 0}
+  .fine a{color:#fff}
   .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#000;color:#fff;font:700 15px system-ui;
     padding:10px 16px;border-radius:999px;opacity:0;transition:opacity .2s;z-index:9}
   .toast.on{opacity:.9}
@@ -155,17 +162,16 @@
   <h2>PICK YOUR TEAM</h2>
   <div class="teams" id="teams"></div>
   <div class="other">
-    <input id="custom" maxlength="40" placeholder="Or any team: the Lakers, your kid's soccer team…">
-    <button class="ghost" id="customGo">That one</button>
+    <input id="custom" maxlength="40" placeholder="Or type ANY team…" enterkeyhint="go" autocomplete="off">
+    <button class="ghost" id="customGo">Go</button>
   </div>
 
-  <p class="stat">Huddles broken for the Packers on this device: <b id="count">0</b></p>
+  <p class="stat">🧀 Huddles broken: <b id="count">0</b></p>
 
   <footer>
-    <p style="font-size:14px;font-weight:800;margin:0 0 8px">Made by <a href="https://x.com/thelpdrive" target="_blank" rel="noopener">@thelpdrive</a> on X</p>
-    Parody. Cartoon coach is a caricature. Not affiliated with the NFL, any team, coach or player. Player names are for fun and may be out of date.<br>
-    Inspired by what Aaron Rodgers told The Pat McAfee Show on Nov 24, 2026 about a Steelers halftime huddle:
-    <a href="https://sports.yahoo.com/nfl/articles/aaron-rodgers-blast-mccarthy-1-191058565.html" target="_blank" rel="noopener">the story</a>.
+    <a class="credit" href="https://x.com/thelpdrive" target="_blank" rel="noopener">Made by <span class="x">𝕏</span> @thelpdrive</a>
+    <p class="fine">Parody. Cartoon coach is a caricature. Not affiliated with the NFL, any team, coach or player. Player names are for fun and may be out of date.
+    Inspired by what Aaron Rodgers told The Pat McAfee Show on Nov 24, 2026 about a Steelers halftime huddle (<a href="https://sports.yahoo.com/nfl/articles/aaron-rodgers-blast-mccarthy-1-191058565.html" target="_blank" rel="noopener">the story</a>).</p>
   </footer>
 </main>
 <div class="toast" id="toast"></div>
@@ -286,7 +292,26 @@ $("#customGo").onclick=()=>{
 };
 $("#custom").addEventListener("keydown",e=>{ if(e.key==="Enter") $("#customGo").click(); });
 
-function say(text,rate=1.05,pitch=.8){ if(!("speechSynthesis" in window)) return; try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.rate=rate; u.pitch=pitch; speechSynthesis.speak(u);}catch(e){} }
+let AC=null;
+function ac(){ try{ if(!AC) AC=new (window.AudioContext||window.webkitAudioContext)(); if(AC.state==="suspended") AC.resume(); }catch(e){} return AC; }
+function tone(f,dur,type="square",vol=.15,when=0,slideTo=null){ const a=ac(); if(!a) return; const t=a.currentTime+when;
+  const o=a.createOscillator(), g=a.createGain(); o.type=type; o.frequency.setValueAtTime(f,t); if(slideTo) o.frequency.exponentialRampToValueAtTime(slideTo,t+dur);
+  g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol,t+.01); g.gain.setValueAtTime(vol,t+dur-.03); g.gain.linearRampToValueAtTime(0,t+dur);
+  o.connect(g).connect(a.destination); o.start(t); o.stop(t+dur+.02); }
+function whistle(){ const a=ac(); if(!a) return; const t=a.currentTime;
+  [0,.32].forEach((d,i)=>{ const o=a.createOscillator(), l=a.createOscillator(), lg=a.createGain(), g=a.createGain();
+    o.type="sine"; o.frequency.value=2900; l.frequency.value=38; lg.gain.value=180; l.connect(lg).connect(o.frequency);
+    const len=i?0.55:0.22; g.gain.setValueAtTime(0,t+d); g.gain.linearRampToValueAtTime(.18,t+d+.02); g.gain.setValueAtTime(.18,t+d+len-.04); g.gain.linearRampToValueAtTime(0,t+d+len);
+    o.connect(g).connect(a.destination); o.start(t+d); l.start(t+d); o.stop(t+d+len+.02); l.stop(t+d+len+.02); }); }
+function beep(n){ tone(n===3?1046:784, .14, "square", .12); }
+function crowd(){ const a=ac(); if(!a) return; const t=a.currentTime, len=2.4, b=a.createBuffer(1,a.sampleRate*len,a.sampleRate), d=b.getChannelData(0);
+  for(let i=0;i<d.length;i++) d[i]=Math.random()*2-1;
+  const s=a.createBufferSource(), f=a.createBiquadFilter(), g=a.createGain(); s.buffer=b; f.type="bandpass"; f.frequency.value=900; f.Q.value=.6;
+  g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.35,t+.15); g.gain.exponentialRampToValueAtTime(.001,t+len);
+  s.connect(f).connect(g).connect(a.destination); s.start(t); }
+function airhorn(){ [0,.5].forEach(d=>{ [233,277,349].forEach(f=>tone(f,d?0.9:0.38,"sawtooth",.07,d)); }); }
+function snore(){ tone(110,.9,"sawtooth",.06,0,70); tone(140,.7,"sawtooth",.05,1.1,220); }
+function say(){}
 function flash(text,cls=""){ call.className="call "+cls; call.textContent=text; void call.offsetWidth; call.classList.add("show"); }
 
 async function huddleUp(){
@@ -296,7 +321,7 @@ async function huddleUp(){
   colors(team.c1,team.c2); dress(team); scatter();
   await wait(120);
   flash(`${team.short.toUpperCase()}, BRING IT IN!`,"small");
-  say(`${team.short}, bring it in!`,1.05,.8);
+  whistle();
   spread(36);
   await wait(1100);
   spread(32);
@@ -310,14 +335,14 @@ async function breakIt(){
   busy=true; go.disabled=true; go.classList.remove("pulse");
   const sleepy = runs>0 && Math.random()<.22; runs++;
   if (sleepy){
-    call.className="call"; coach.classList.add("sleep"); $("#nameplate").textContent="COACH MIKE (zzz)";
+    call.className="call"; coach.classList.add("sleep"); snore(); $("#nameplate").textContent="COACH MIKE (zzz)";
     await wait(2300);
     coach.classList.remove("sleep"); $("#nameplate").textContent="COACH MIKE";
   }
   for (const [n,w] of [["1","one"],["2","two"],["3","three"]]){
-    say(w,1.15); flash(n); spread(n==="3"?20:26); await wait(560);
+    beep(+n); flash(n); spread(n==="3"?20:26); await wait(560);
   }
-  say("PACKERS!",1,.6);
+  airhorn(); crowd();
   coach.classList.add("yell");
   flash("PACKERS!","packers");
   colors("#203731","#FFB612");
@@ -343,8 +368,8 @@ async function breakIt(){
   go.disabled=false; go.textContent="Huddle up again"; busy=false;
 }
 
-go.onclick=()=>{ if(!team||busy) return; (phase==="ready"?breakIt:huddleUp)(); };
-$("#again").onclick=async()=>{ if(busy) return; await huddleUp(); await wait(500); breakIt(); };
+go.onclick=()=>{ ac(); if(!team||busy) return; (phase==="ready"?breakIt:huddleUp)(); };
+$("#again").onclick=async()=>{ ac(); if(busy) return; await huddleUp(); await wait(500); breakIt(); };
 
 function toast(m){ const t=$("#toast"); t.textContent=m; t.classList.add("on"); setTimeout(()=>t.classList.remove("on"),1600); }
 $("#copy").onclick=async()=>{
