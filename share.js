@@ -294,7 +294,7 @@
         ctx.fillText('PARODY · cartoon coach · not affiliated with the NFL', W / 2, footTop + 106);
 
         return new Promise(function (res, rej) {
-          cv.toBlob(function (b) { b ? res(b) : rej(new Error('blob')); }, 'image/png');
+          cv.toBlob(function (b) { cv.width = cv.height = 0; b ? res(b) : rej(new Error('blob')); }, 'image/png');
         });
       });
     });
@@ -326,11 +326,19 @@
     sheet.appendChild(img);
     var row = document.createElement('div'); row.className = 'shr-row'; sheet.appendChild(row);
     var save = document.createElement('a'); save.className = 'shr-btn'; save.textContent = 'Save image'; save.href = objUrl; save.download = 'huddle-' + slug + '.png';
+    var file = null;
+    try { file = new File([blob], 'huddle-' + slug + '.png', { type: 'image/png' }); } catch (e) {}
+    var shareBtn = null;
+    if (navigator.share) {
+      shareBtn = document.createElement('button'); shareBtn.className = 'shr-btn'; shareBtn.type = 'button'; shareBtn.textContent = 'Share';
+      shareBtn.onclick = function () { nativeShare(file, o, null); };
+    }
     var copy = document.createElement('button'); copy.className = 'shr-btn'; copy.type = 'button'; copy.textContent = 'Copy link';
     copy.onclick = function () { copyText(url || text).then(function () { toast("Link copied. Go ruin someone's day."); }); };
     var x = document.createElement('a'); x.className = 'shr-btn'; x.textContent = 'Post on X'; x.target = '_blank'; x.rel = 'noopener';
     x.href = 'https://x.com/intent/post?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(url);
     var close = document.createElement('button'); close.className = 'shr-btn shr-ghost'; close.type = 'button'; close.textContent = 'Close';
+    if (shareBtn) row.appendChild(shareBtn);
     row.appendChild(save); row.appendChild(copy); row.appendChild(x); row.appendChild(close);
     function shut() {
       document.removeEventListener('keydown', onKey, true);
@@ -345,29 +353,65 @@
     try { close.focus({ preventScroll: true }); } catch (e) {}
   }
 
+  var cache = null, sharing = false;
+
+  function keyOf(o) {
+    o = o || {};
+    return JSON.stringify([slugOf(o), o.short || '', o.payoff || '', !!o.sleepy, (o.stars || []).map(function (s) { return (s && s[0]) + ':' + (s && s[1]); }).join('|')]);
+  }
+
+  function prepare(o) {
+    o = o || {};
+    var entry = { key: keyOf(o), blob: null, file: null, promise: null };
+    entry.promise = card(o).then(function (blob) {
+      entry.blob = blob;
+      try { entry.file = new File([blob], 'huddle-' + slugOf(o) + '.png', { type: 'image/png' }); } catch (e) {}
+      return blob;
+    }, function (e) {
+      if (cache === entry) cache = null;
+      throw e;
+    });
+    entry.promise.catch(function () {});
+    cache = entry;
+    return entry.promise;
+  }
+
+  // Must be called straight from a tap or click handler: no await or then before it.
+  function nativeShare(file, o, fb) {
+    if (sharing) return;
+    var text = o.text || '', url = o.url || '', p;
+    try {
+      if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+        p = navigator.share({ files: [file], text: (text + ' ' + url).trim() });
+      } else if (navigator.share) {
+        p = navigator.share({ text: text, url: url });
+      } else { if (fb) fb(); return; }
+    } catch (e) { if (e && e.name === 'AbortError') return; if (fb) fb(); return; }
+    sharing = true;
+    Promise.resolve(p).then(function () { sharing = false; }, function (e) {
+      sharing = false;
+      if (e && e.name === 'AbortError') return;
+      if (fb) fb();
+    });
+  }
+
   function open(o) {
     o = o || {};
     try {
+      if (sharing) return Promise.resolve();
+      var slug = slugOf(o), key = keyOf(o);
+      if (cache && cache.key === key && cache.blob) {
+        var blob = cache.blob, file = cache.file;
+        nativeShare(file, o, function () { fallbackModal(blob, o, slug); });
+        return Promise.resolve();
+      }
       toast('Making your card…');
-      var slug = slugOf(o);
-      return card(o).then(function (blob) {
-        var file = null;
-        try { file = new File([blob], 'huddle-' + slug + '.png', { type: 'image/png' }); } catch (e) {}
-        var text = o.text || '', url = o.url || '';
-        function fb() { fallbackModal(blob, o, slug); }
-        var p;
-        if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
-          p = navigator.share({ files: [file], text: (text + ' ' + url).trim() });
-        } else if (navigator.share) {
-          p = navigator.share({ text: text, url: url });
-        } else { fb(); return; }
-        return Promise.resolve(p).catch(function (e) {
-          if (e && e.name === 'AbortError') return;
-          fb();
-        });
+      var pr = (cache && cache.key === key) ? cache.promise : prepare(o);
+      return pr.then(function (blob) {
+        fallbackModal(blob, o, slug);
       }).catch(function () { toast('Could not make the card. Try again.'); });
     } catch (e) { return Promise.resolve(); }
   }
 
-  window.Share = { card: card, open: open, toast: toast };
+  window.Share = { card: card, prepare: prepare, open: open, toast: toast };
 })();

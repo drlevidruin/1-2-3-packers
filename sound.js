@@ -65,10 +65,10 @@
   function preload() {
     try {
       if (!ctx || loading) return; loading = true;
-      [].forEach(function (k) { // voice clips off (robot voice); drop a real recording in /audio and list it here
-        fetch('/audio/' + k + '.mp3?v=3').then(function (r) { return r.arrayBuffer(); }).then(function (ab) {
+      ['one', 'two', 'three', 'packers'].forEach(function (k) { // team chant clips (tools/make_voice.py)
+        fetch('/audio/' + k + '.mp3?v=4').then(function (r) { return r.arrayBuffer(); }).then(function (ab) {
           return new Promise(function (ok, no) { var p = ctx.decodeAudioData(ab, ok, no); if (p && p.then) p.then(ok, no); });
-        }).then(function (b) { bufs[k] = b; }).catch(function () {});
+        }).then(function (b) { bufs[k] = b; }).catch(function () { loading = false; });
       });
     } catch (e) {}
   }
@@ -243,7 +243,7 @@
     n.connect(bp); bp.connect(g);
   });
 
-  function packers() { try { var said = clip('packers'); setTimeout(crowd, said ? 420 : 0); setTimeout(airhorn, said ? 640 : 0); } catch (e) {} }
+  function packers() { try { var said = clip('packers'); setTimeout(crowd, said ? 650 : 0); setTimeout(airhorn, said ? 850 : 0); } catch (e) {} }
 
   function setMuted(m) {
     muted = !!m;

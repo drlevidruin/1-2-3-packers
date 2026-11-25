@@ -269,8 +269,8 @@
 <div class="toast" id="toast"></div>
 <canvas id="fx"></canvas>
 
-<script src="/sound.js?v=4"></script>
-<script src="/share.js?v=3"></script>
+<script src="/sound.js?v=5"></script>
+<script src="/share.js?v=4"></script>
 <script>
 (function(){
 'use strict';
@@ -784,6 +784,7 @@ async function breakIt(){
   coach.classList.remove("yell"); setMood("neutral");
   busy = false;
   setState("done");
+  prepareShare();
 }
 function dressOne(p, i){ p.style.setProperty("--pc1", "#203731"); p.style.setProperty("--pc2", "#FFB612"); p.style.setProperty("--pn", "#FFB612"); p.querySelector(".n").textContent = "G"; }
 
@@ -803,9 +804,13 @@ function shareText(){
   if (team.slug === "packers") return `I picked the Packers. The coach did the chant. The one time it makes sense. 🧀`;
   return rnd([`My ${team.short} huddle just broke. Guess what the coach yelled. 🧀`, `${team.short} halftime adjustments: 1-2-3 PACKERS! 🧀`, `Send this to a ${team.short} fan who will be mad. 🧀`, `Try your team. I dare you. 🧀`]);
 }
-function doShare(){
-  const o = { teamLabel: team.label, short: team.short, slug: team.slug, c1: team.c1, c2: team.c2, stars: team.stars,
+function shareObj(){
+  return { teamLabel: team.label, short: team.short, slug: team.slug, c1: team.c1, c2: team.c2, stars: team.stars,
     payoff: lastPayoff, sleepy: lastSleepy, url: shareUrl(), text: shareText(), coachSvg: coachSVG("yell", team.c1) };
+}
+function prepareShare(){ try { if (window.Share && Share.prepare) Share.prepare(shareObj()); } catch(e){} }
+function doShare(){
+  const o = shareObj();
   if (window.Share && Share.open) { try { Share.open(o); return; } catch(e){} }
   if (navigator.share) { navigator.share({ text: o.text, url: o.url }).catch(()=>{}); return; }
   try { navigator.clipboard.writeText(o.text + " " + o.url); toast("Link copied. Go ruin someone's day."); } catch(e){ toast(o.url); }
